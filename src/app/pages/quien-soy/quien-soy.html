@@ -1,0 +1,49 @@
+<div class="container mt-5">
+  <div class="card shadow-sm mb-5" *ngIf="miPerfil; else cargando">
+    <div class="row g-0 align-items-center">
+      <div class="col-md-4 text-center p-3">
+        <img [src]="miPerfil.avatar_url" class="img-fluid rounded-circle shadow" alt="Foto de perfil" style="max-width: 200px;">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h2 class="card-title text-primary">{{ miPerfil.name }}</h2>
+          <p class="card-text lead">{{ miPerfil.bio }}</p>
+          <ul class="list-unstyled">
+            <li><strong>Usuario:</strong> {{ miPerfil.login }} </li>
+            <li><strong>Repositorios públicos:</strong> {{ miPerfil.public_repos }} </li>
+            <li><strong>Perfil:</strong> <a [href]="miPerfil.html_url" target="_blank">github.com/{{ miPerfil.login }}</a> </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #cargando>
+    <div class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando datos...</span>
+      </div>
+      <p class="mt-2">Obteniendo datos de GitHub...</p>
+    </div>
+  </ng-template>
+
+  <div class="card border-info shadow-sm mt-4">
+    <div class="card-header bg-info text-white">
+      <h3 class="mb-0">Elección de Juego Propio: Adivina el Número</h3>
+    </div>
+    <div class="card-body">
+      <p><strong>¿Por qué este juego?:</strong> He seleccionado este juego porque permite medir de forma efectiva la <strong>capacidad de deducción lógica</strong> y la memoria de trabajo del usuario de manera simple y dinámica.</p>
+      
+      <p><strong>Cómo jugar:</strong> 
+        <br>1. El sistema genera un número aleatorio secreto entre 1 y 100.
+        <br>2. El jugador debe ingresar un número para intentar adivinarlo.
+        <br>3. Tras cada intento, la aplicación indicará si el número secreto es <strong>mayor</strong> o <strong>menor</strong> al ingresado.
+      </p>
+
+      <p><strong>Condiciones de finalización:</strong> 
+        <br>• <strong>Victoria:</strong> El jugador encuentra el número secreto antes de agotar sus intentos.
+        <br>• <strong>Derrota:</strong> El jugador agota todos sus intentos sin haber acertado el número.
+      </p>
+    </div>
+  </div>
+</div>
