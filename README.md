@@ -42,7 +42,7 @@ La aplicación se encuentra compilada y distribuida en producción a través de 
 
 ### 🔹 Sprint #3: Motores de Juego y Persistencia de Resultados
 * **Objetivo:** Desarrollo de las lógicas de entretenimiento y almacenamiento estadístico.
-* **Entregables:** Creación del clásico juego **Ahorcado** con ingreso restrictivo de caracteres mediante una botonera interactiva en pantalla (sin teclado físico). Desarrollo del juego de cartas **Mayor o Menor** utilizando el mazo tradicional de la baraja española. Conexión de un servicio centralizado de juegos encargado de reportar y persistir cada victoria o derrota en la base de datos relacional para su futuro análisis de puntuaciones.
+* **Entregables:** Desarrollo del juego de cartas **Mayor o Menor** utilizando el mazo tradicional de la baraja española. Conexión de un servicio centralizado de juegos encargado de reportar y persistir cada victoria o derrota en la base de datos relacional para su futuro análisis de puntuaciones.
 
 ### 🔹 Sprint #4: Chat Interactivo y Juegos Adicionales *(En Desarrollo)*
 * **Objetivo:** Comunicación social interna e incremento del catálogo lúdico.
