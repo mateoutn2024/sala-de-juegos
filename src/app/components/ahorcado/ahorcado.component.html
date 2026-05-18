@@ -1,0 +1,24 @@
+<div class="container text-center mt-5 text-white bg-dark p-5 rounded shadow">
+  <h2>🪓 Juego del Ahorcado</h2>
+  <p class="fs-4 mt-3">Intentos restantes: <span class="text-danger fw-bold">{{ intentosRestantes }}</span></p>
+
+  <div class="d-flex justify-content-center gap-2 my-4">
+    <span *ngFor="let letra of palabraOculta" class="fs-1 fw-bold border-bottom border-3 px-2 mx-1">{{ letra }}</span>
+  </div>
+
+  <div class="row justify-content-center gap-2 px-4" *ngIf="!juegoTerminado">
+    <button *ngFor="let letra of letrasDisponibles" 
+            (click)="intentarLetra(letra)" 
+            [disabled]="letrasUsadas.includes(letra)"
+            class="btn btn-outline-light col-1 m-1 fs-5 fw-bold"
+            [class.btn-secondary]="letrasUsadas.includes(letra)">
+      {{ letra }}
+    </button>
+  </div>
+
+  <div *ngIf="juegoTerminado" class="mt-4">
+    <div *ngIf="gano" class="alert alert-success fs-3">🎉 ¡Felicidades! Ganaste.</div>
+    <div *ngIf="!gano" class="alert alert-danger fs-3">💥 Perdiste. La palabra era: {{ palabraSecreta }}</div>
+    <button (click防="reiniciarJuego()" class="btn btn-primary btn-lg mt-2">Jugar de Nuevo</button>
+  </div>
+</div>

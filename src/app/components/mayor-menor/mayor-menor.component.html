@@ -1,0 +1,24 @@
+<div class="container text-center mt-5 text-white bg-dark p-5 rounded shadow">
+  <h2>🃏 Juego: Mayor o Menor</h2>
+  <p class="fs-4 mt-3">Aciertos: <span class="text-success fw-bold">{{ puntos }}</span> / {{ intentos }}</p>
+
+  <div class="card bg-light text-dark mx-auto my-4 shadow-lg" style="width: 12rem; height: 18rem; display: flex; align-items: center; justify-content: center;">
+    <div class="card-body text-center d-flex flex-column justify-content-between py-4">
+      <h1 class="display-3 fw-bold">{{ cartaActual.numero }}</h1>
+      <p class="fs-4 text-muted">{{ cartaActual.palo }}</p>
+    </div>
+  </div>
+
+  <p class="fs-5 alert alert-info my-3">{{ mensaje }}</p>
+
+  <div class="d-flex justify-content-center gap-3" *ngIf="!juegoTerminado">
+    <button (click)="jugar('mayor')" class="btn btn-success btn-lg px-4">⬆️ Mayor</button>
+    <button (click)="jugar('menor')" class="btn btn-danger btn-lg px-4">⬇️ Menor</button>
+  </div>
+
+  <div *ngIf="juegoTerminado" class="mt-4">
+    <div *ngIf="puntos >= 5" class="alert alert-success fs-3">🎉 ¡Excelente racha! Ganaste el juego.</div>
+    <div *ngIf="puntos < 5" class="alert alert-warning fs-3">🍿 Suerte la próxima. No alcanzaste los aciertos mínimos.</div>
+    <button (click)="reiniciarJuego()" class="btn btn-primary btn-lg mt-2">Jugar otra vez</button>
+  </div>
+</div>

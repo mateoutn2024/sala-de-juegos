@@ -1,0 +1,88 @@
+/* Contenedor general para que no se pegue a los bordes */
+.container {
+  max-width: 700px;
+  margin-top: 2rem;
+}
+
+/* Card del Chat con estética oscura */
+.card {
+  border-radius: 15px;
+  background-color: #161b22; /* Color oscuro tipo GitHub/Discord */
+  border: 1px solid #30363d;
+}
+
+.card-header {
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+  background: linear-gradient(90deg, #5865f2, #404eed); /* Azul neón */
+  color: white;
+  font-weight: bold;
+}
+
+/* El área donde flotan los mensajes */
+.card-body {
+  background-color: #0d1117 !important;
+  border-bottom: 1px solid #30363d;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Burbujas de mensaje */
+.rounded {
+  border-radius: 18px !important;
+  padding: 10px 15px !important;
+  position: relative;
+  font-size: 0.95rem;
+}
+
+/* Mensajes enviados por el usuario (A la derecha) */
+.bg-primary {
+  background-color: #5865f2 !important;
+}
+
+/* Mensajes recibidos (A la izquierda) */
+.bg-secondary {
+  background-color: #21262d !important;
+  border: 1px solid #30363d;
+}
+
+/* Estilo del input de texto */
+.form-control {
+  background-color: #0d1117 !important;
+  color: white !important;
+  border: 1px solid #30363d !important;
+  border-radius: 8px 0 0 8px;
+}
+
+.form-control:focus {
+  border-color: #5865f2 !important;
+  box-shadow: 0 0 5px rgba(88, 101, 242, 0.5);
+}
+
+/* Botón de Enviar */
+.btn-primary {
+  background-color: #5865f2;
+  border-color: #5865f2;
+  border-radius: 0 8px 8px 0;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #4752c4;
+}
+
+/* Ajuste del footer */
+.card-footer {
+  border-bottom-left-radius: 15px !important;
+  border-bottom-right-radius: 15px !important;
+}
+
+/* Scrollbar personalizado para que quede fachero */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: #30363d;
+  border-radius: 4px;
+}

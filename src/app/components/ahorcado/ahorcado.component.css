@@ -1,0 +1,96 @@
+/* Contenedor Principal del Juego */
+.container {
+  max-width: 800px;
+  background-color: #1a1a2e !important; /* Fondo oscuro azulado premium */
+  border: 2px solid #162447;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Título del Juego */
+h2 {
+  color: #e94560; /* Color acento gaming (rosa/rojo brillante) */
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(233, 69, 96, 0.3);
+}
+
+/* Palabra Oculta (Guiones Bajos y Letras Adivinadas) */
+.border-bottom {
+  color: #0f4c81; /* Azul eléctrico para las líneas */
+  min-width: 45px;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+span.fs-1 {
+  color: #ffffff;
+  font-family: 'Courier New', Courier, monospace; /* Tipografía estilo código/juego */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* Botonera Interactiva (Letras) */
+.btn-outline-light {
+  border-color: #4e5d78;
+  color: #cdffff;
+  background-color: #162447;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.15s ease-in-out;
+}
+
+/* Efecto Hover sobre las letras disponibles */
+.btn-outline-light:hover:not([disabled]) {
+  background-color: #e94560 !important;
+  border-color: #e94560 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(233, 69, 96, 0.4);
+}
+
+/* Letras ya utilizadas (Deshabilitadas) */
+.btn-secondary, .btn-outline-light:[disabled] {
+  background-color: #0f141c !important;
+  border-color: #1f2937 !important;
+  color: #4b5563 !important;
+  opacity: 0.5;
+  transform: none !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+}
+
+/* Alertas de Fin de Juego */
+.alert {
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.alert-success {
+  background: linear-gradient(145deg, #1f402b, #198754);
+  color: #ffffff;
+}
+
+.alert-danger {
+  background: linear-gradient(145deg, #5c1d24, #dc3545);
+  color: #ffffff;
+}
+
+/* Botón "Jugar de Nuevo" */
+.btn-primary.btn-lg {
+  background-color: #e94560;
+  border-color: #e94560;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(233, 69, 96, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-primary.btn-lg:hover {
+  background-color: #ff5e7e;
+  border-color: #ff5e7e;
+  transform: scale(1.03);
+}
