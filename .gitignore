@@ -1,9 +1,5 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Ocultar las claves reales de Supabase
-src/environments/environment.ts
-src/environments/environment.development.ts
-
 # Compiled output
 /dist
 /tmp
