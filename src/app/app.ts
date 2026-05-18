@@ -1,28 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from './services/auth.service';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Component, signal } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
-  templateUrl: './app.html', 
-  styleUrl: './app.css'      
+  imports: [RouterLink, RouterOutlet],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
 })
-export class AppComponent implements OnInit {
-  usuarioLogueado: any = null;
-
-  constructor(private authService: AuthService, private router: Router) {}
-
-  ngOnInit() {
-    this.authService.usuario$.subscribe(user => {
-      this.usuarioLogueado = user;
-    });
-  }
-
-  async logout() {
-    await this.authService.salir();
-    this.router.navigate(['/login']);
-  }
+export class App {
+  protected readonly title = signal('sala-de-juegos');
 }
