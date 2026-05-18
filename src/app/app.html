@@ -1,13 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Sala de Juegos</a>
-    <div class="navbar-nav">
-      <a class="nav-link" routerLink="/home">Home</a>
-      <a class="nav-link" routerLink="/login">Login</a>
-      <a class="nav-link" routerLink="/registro">Registro</a>
-      <a class="nav-link" routerLink="/quien-soy">Quién Soy</a>
+    <a class="navbar-brand" routerLink="/home">
+      <span>🎮</span> SALA DE JUEGOS
+    </a>
+
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <a class="nav-link" routerLink="/home" routerLinkActive="active">Inicio</a>
+        <a class="nav-link" routerLink="/quien-soy" routerLinkActive="active">Quién Soy</a>
+        
+        <div class="divider"></div>
+
+        <ng-container *ngIf="!usuarioLogueado">
+          <a class="btn btn-login" routerLink="/login">Ingresar</a>
+          <a class="btn btn-register" routerLink="/registro">Registrarse</a>
+        </ng-container>
+
+        <ng-container *ngIf="usuarioLogueado">
+          <span class="user-badge">
+            {{ usuarioLogueado.email }}
+          </span>
+          <button class="btn btn-logout" (click)="logout()">Salir</button>
+        </ng-container>
+      </ul>
     </div>
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="main-container">
+  <router-outlet></router-outlet>
+</div>
