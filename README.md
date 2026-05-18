@@ -40,9 +40,9 @@ La aplicación se encuentra compilada y distribuida en producción a través de 
 * **Objetivo:** Integración del motor de base de datos y protección del ecosistema de la app.
 * **Entregables:** Sistema de inicio de sesión y registro de usuarios interactuando directamente con los servicios de **Supabase Auth**. Creación de un Navbar reactivo que altera sus componentes visuales según el estado asíncrono del usuario. Implementación de **Rutas Protegidas (AuthGuards)** para restringir el acceso a usuarios anónimos, y un sistema automatizado de **Logs de Ingreso** que almacena en la base de datos la fecha y hora exacta de cada login.
 
-### 🔹 Sprint #3: Motores de Juego y Persistencia de Resultados (En desarrollo)
+### 🔹 Sprint #3: Motores de Juego y Persistencia de Resultados
 * **Objetivo:** Desarrollo de las lógicas de entretenimiento y almacenamiento estadístico.
-* **Entregables:** Desarrollo del juego de cartas **Mayor o Menor** utilizando el mazo tradicional de la baraja española. Conexión de un servicio centralizado de juegos encargado de reportar y persistir cada victoria o derrota en la base de datos relacional para su futuro análisis de puntuaciones.
+* **Entregables:** Creación del clásico juego **Ahorcado** con ingreso restrictivo de caracteres mediante una botonera interactiva en pantalla (sin teclado físico). Desarrollo del juego de cartas **Mayor o Menor** utilizando el mazo tradicional de la baraja española. Conexión de un servicio centralizado de juegos encargado de reportar y persistir cada victoria o derrota en la base de datos relacional para su futuro análisis de puntuaciones.
 
 ### 🔹 Sprint #4: Chat Interactivo y Juegos Adicionales *(En Desarrollo)*
 * **Objetivo:** Comunicación social interna e incremento del catálogo lúdico.
