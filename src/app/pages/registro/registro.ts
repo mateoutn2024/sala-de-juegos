@@ -18,7 +18,7 @@ export class RegistroComponent {
 
   async onRegistrar() {
     try {
-      const response = await this.authService.nuevoUsuario(this.nuevoEmail, this.nuevoPass);
+      const response = await this.authService.registrar(this.nuevoEmail, this.nuevoPass);
       
       if (response.error) {
         alert("Error: " + response.error.message);
