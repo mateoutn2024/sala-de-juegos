@@ -50,7 +50,7 @@ span.fs-1 {
 }
 
 /* Letras ya utilizadas (Deshabilitadas) */
-.btn-secondary, .btn-outline-light:[disabled] {
+.btn-secondary, .btn-outline-light:disabled {
   background-color: #0f141c ;
   border-color: #1f2937 ;
   color: #4b5563 ;
