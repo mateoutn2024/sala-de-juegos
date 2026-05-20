@@ -1,44 +1,52 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <h2 class="mb-4">Crear Cuenta</h2>
-
-      <div *ngIf="mensajeError" class="alert alert-danger" role="alert">
+    <div class="col-md-5">
+      
+      <div *ngIf="mensajeError" class="alert alert-danger mb-3" role="alert">
         {{ mensajeError }}
       </div>
 
-      <form [formGroup]="formRegistro" (ngSubmit)="registrarse()">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center py-3">
+          <h3 class="mb-0 fw-bold">Crear Cuenta</h3>
+        </div>
         
-        <div class="mb-3">
-          <label class="form-label">Nombre</label>
-          <input type="text" class="form-control" formControlName="nombre" placeholder="Tu nombre">
+        <div class="card-body p-4">
+          <form [formGroup]="formRegistro" (ngSubmit)="registrarse()">
+            
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Nombre</label>
+              <input type="text" class="form-control" formControlName="nombre" placeholder="Tu nombre">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Apellido</label>
+              <input type="text" class="form-control" formControlName="apellido" placeholder="Tu apellido">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Edad</label>
+              <input type="number" class="form-control" formControlName="edad" placeholder="Tu edad">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Email</label>
+              <input type="email" class="form-control" formControlName="correo" placeholder="tu@email.com">
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Contraseña</label>
+              <input type="password" class="form-control" formControlName="contrasena" placeholder="Mínimo 6 caracteres">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" [disabled]="formRegistro.invalid">
+              Registrarme
+            </button>
+
+          </form>
         </div>
+      </div>
 
-        <div class="mb-3">
-          <label class="form-label">Apellido</label>
-          <input type="text" class="form-control" formControlName="apellido" placeholder="Tu apellido">
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Edad</label>
-          <input type="number" class="form-control" formControlName="edad" placeholder="Tu edad">
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Correo Electrónico</label>
-          <input type="email" class="form-control" formControlName="correo" placeholder="ejemplo@utn.edu.ar">
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Contraseña</label>
-          <input type="password" class="form-control" formControlName="contrasena" placeholder="Mínimo 6 caracteres">
-        </div>
-
-        <button type="submit" class="btn btn-success w-100" [disabled]="formRegistro.invalid">
-          Registrarse e Ingresar
-        </button>
-
-      </form>
     </div>
   </div>
 </div>
