@@ -1,0 +1,32 @@
+<div class="container mt-4 text-white">
+  <div class="card bg-dark border-secondary shadow-lg">
+    <div class="card-header bg-primary text-center py-3">
+      <h4 class="mb-0">💬 Chat Global de la Sala</h4>
+    </div>
+    
+    <div #scrollContainer class="card-body bg-black overflow-y-auto" style="height: 400px; padding: 20px;">
+      <div *ngFor="let msg of mensajes" class="mb-3 d-flex flex-column"
+           [class.align-items-end]="msg.usuario === usuarioActual"
+           [class.align-items-start]="msg.usuario !== usuarioActual">
+        
+        <div class="rounded px-3 py-2 text-wrap shadow-sm" style="max-width: 75%;"
+             [ngClass]="msg.usuario === usuarioActual ? 'bg-primary text-white' : 'bg-secondary text-white'">
+          <small class="d-block fw-bold opacity-75 mb-1">{{ msg.usuario }}</small>
+          <span>{{ msg.texto }}</span>
+        </div>
+        <small class="text-muted mt-1 px-1" style="font-size: 0.75rem;">
+          {{ msg.fecha_hora | date:'shortTime' }}
+        </small>
+      </div>
+    </div>
+
+    <div class="card-footer bg-dark border-secondary p-3">
+      <form (ngSubmit)="enviarMensaje()" class="input-group">
+        <input type="text" [(ngModel)]="nuevoMensaje" name="mensaje" 
+               class="form-control bg-dark text-white border-secondary" 
+               placeholder="Escribe un mensaje..." autocomplete="off">
+        <button class="btn btn-primary px-4" type="submit">Enviar</button>
+      </form>
+    </div>
+  </div>
+</div>

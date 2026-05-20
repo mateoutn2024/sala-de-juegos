@@ -21,10 +21,24 @@ export class AuthService {
   }
 
   // Registro de nuevos usuarios
-  async registrar(email: string, pass: string) {
-    return await this.supabase.auth.signUp({ email, password: pass });
-  }
+async registrar(email: string, pass: string, nombre: string, apellido: string, edad: number) {
+  // 1. Crea la cuenta en el sistema de autenticación
+  const response = await this.supabase.auth.signUp({ email, password: pass });
 
+  // 2. Si no hay error y el usuario se creó, guardamos sus datos en la base de datos
+  if (!response.error && response.data.user) {
+    await this.supabase.from('usuarios').insert([{
+      id: response.data.user.id, // Vincula el perfil al usuario de autenticación
+      email: email,
+      nombre: nombre,
+      apellido: apellido,
+      edad: edad,
+      fecha_registro: new Date().toISOString()
+    }]);
+  }
+  
+  return response;
+}
   async iniciarSesion(email: string, pass: string) {
     const response = await this.supabase.auth.signInWithPassword({ email, password: pass });
     if (!response.error && response.data.user) {

@@ -1,39 +1,72 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
+import { User } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
-export class LoginComponent {
-  email: string = '';
-  pass: string = '';
+export class LoginComponent implements OnInit, OnDestroy {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private subUsuario!: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  // Formulario reactivo con validaciones estrictas
+  formLogin = new FormGroup({
+    correo: new FormControl('', [Validators.required, Validators.email]),
+    clave: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
 
-  async onLogin() {
-    try {
-      const response = await this.authService.iniciarSesion(this.email, this.pass);
-      
-      if (response.error) {
-        alert("Error al iniciar sesión: " + response.error.message);
-      } else {
-        console.log("Sesión iniciada:", response.data);
-        this.router.navigate(['/home']);
-      }
-    } catch (error) {
-      alert("Ocurrió un error inesperado.");
+  mensajeError = '';
+  usuarioLogueado: User | null = null; // <- ESTO ES LO QUE TE FALTABA
+
+  ngOnInit() {
+    // Escucha de forma reactiva si hay un usuario logueado en Supabase actualmente
+    this.subUsuario = this.authService.usuario$.subscribe(user => {
+      this.usuarioLogueado = user;
+    });
+  }
+
+  ngOnDestroy() {
+    // Desuscripción limpia al salir del componente para evitar fugas de memoria
+    if (this.subUsuario) {
+      this.subUsuario.unsubscribe();
     }
   }
 
-  accesoRapido() {
-    this.email = 'admin@admin.com';
-    this.pass = '123456';
+  // Función para los 3 botones de prueba
+  accesoRapido(correo: string, clave: string) {
+    this.formLogin.patchValue({ correo, clave });
+    this.ingresar();
+  }
+
+  // Lógica principal de inicio de sesión
+  async ingresar() {
+    if (this.formLogin.invalid) return;
+
+    try {
+      const { correo, clave } = this.formLogin.value;
+      const response = await this.authService.iniciarSesion(correo!, clave!);
+      
+      // Control de errores nativos del objeto de respuesta de Supabase
+      if (response.error) {
+        this.mensajeError = 'Credenciales inválidas o usuario no encontrado.';
+        console.error(response.error.message);
+        return;
+      }
+
+      this.mensajeError = '';
+      this.router.navigate(['/home']);
+    } catch (error: any) {
+      this.mensajeError = 'Credenciales inválidas o usuario no encontrado.';
+      console.error(error);
+    }
   }
 }

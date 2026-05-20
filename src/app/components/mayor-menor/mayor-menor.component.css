@@ -1,0 +1,33 @@
+/* Contenedor principal alineado con el diseño limpio */
+.container-game {
+  border-radius: 12px;
+}
+
+/* Diseño de la Carta Española Limpia */
+.card-espanola {
+  width: 11rem;
+  height: 16rem;
+  border-radius: 12px;
+  border: 2px solid #dee2e6;
+  background-color: #f8f9fa;
+  transition: transform 0.2s ease;
+}
+
+.card-espanola:hover {
+  transform: translateY(-3px);
+}
+
+.card-number {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #212529;
+}
+
+/* Estilo para los botones de acción */
+.btn-action {
+  border-radius: 8px;
+  transition: transform 0.1s ease;
+}
+
+.btn-action:active {
+  transform: scale(0.97);
+}

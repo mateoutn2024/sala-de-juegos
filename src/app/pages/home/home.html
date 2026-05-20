@@ -1,1 +1,56 @@
-<p>home works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-12"> <div class="text-center mb-5">
+        <h1 class="fw-bold text-dark">Sala de Juegos</h1>
+        <p class="text-muted fs-5">Seleccioná una de las opciones disponibles para comenzar a jugar o interactuar.</p>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4 d-flex flex-column">
+              <h4 class="card-title fw-bold text-primary mb-3">Juego del Ahorcado</h4>
+              <p class="card-text text-secondary flex-grow-1">
+                Adiviná la palabra secreta ingresando letras mediante los botones en pantalla antes de quedarte sin intentos.
+              </p>
+              <button [routerLink]="['/components/ahorcado']" class="btn btn-primary w-100 py-2 fw-bold mt-3">
+                Ingresar al Juego
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4 d-flex flex-column">
+              <h4 class="card-title fw-bold text-primary mb-3">Mayor o Menor</h4>
+              <p class="card-text text-secondary flex-grow-1">
+                Arriesgá si la siguiente carta de la baraja será mayor, menor o igual que la que se muestra actualmente en base a tu puntuación.
+              </p>
+              <button [routerLink]="['/components/mayor-menor']" class="btn btn-primary w-100 py-2 fw-bold mt-3">
+                Ingresar al Juego
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4 d-flex flex-column">
+              <h4 class="card-title fw-bold text-primary mb-3">Sala de Chat</h4>
+              <p class="card-text text-secondary flex-grow-1">
+                Conectate a la sala global para comunicarte en tiempo real con todos los usuarios que se encuentren logueados.
+              </p>
+              <button [routerLink]="['/components/chat']" class="btn btn-primary w-100 py-2 fw-bold mt-3">
+                Ingresar al Chat
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

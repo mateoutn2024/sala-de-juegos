@@ -1,24 +1,67 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-4">
-      <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-          <h3 class="text-center">Crear Cuenta</h3>
+    <div class="col-md-5">
+      
+      <div *ngIf="mensajeError" class="alert alert-danger mb-3 text-center py-2" role="alert">
+        {{ mensajeError }}
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center py-3">
+          <h3 class="mb-0 fw-bold">Crear Cuenta</h3>
         </div>
-        <div class="card-body">
-          <form (ngSubmit)="onRegistrar()">
+
+        <div class="card-body p-4">
+          <form [formGroup]="formRegistro" (ngSubmit)="registrarse()">
+            
             <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" name="email" [(ngModel)]="nuevoEmail" class="form-control" placeholder="tu@email.com" required>
+              <label class="form-label fw-semibold">Nombre</label>
+              <input type="text" class="form-control" formControlName="nombre" placeholder="Tu nombre">
+              <span *ngIf="formRegistro.get('nombre')?.touched && formRegistro.get('nombre')?.invalid" class="error-message">
+                El nombre es requerido.
+              </span>
             </div>
+
             <div class="mb-3">
-              <label class="form-label">Contraseña</label>
-              <input type="password" name="pass" [(ngModel)]="nuevoPass" class="form-control" placeholder="Mínimo 6 caracteres" required>
+              <label class="form-label fw-semibold">Apellido</label>
+              <input type="text" class="form-control" formControlName="apellido" placeholder="Tu apellido">
+              <span *ngIf="formRegistro.get('apellido')?.touched && formRegistro.get('apellido')?.invalid" class="error-message">
+                El apellido es requerido.
+              </span>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Registrarme</button>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Edad</label>
+              <input type="number" class="form-control" formControlName="edad" placeholder="Tu edad">
+              <span *ngIf="formRegistro.get('edad')?.touched && formRegistro.get('edad')?.invalid" class="error-message">
+                La edad debe ser mayor a 0.
+              </span>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Email</label>
+              <input type="email" class="form-control" formControlName="correo" placeholder="tu@email.com">
+              <span *ngIf="formRegistro.get('correo')?.touched && formRegistro.get('correo')?.invalid" class="error-message">
+                Ingresá un correo electrónico válido.
+              </span>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Contraseña</label>
+              <input type="password" class="form-control" formControlName="contrasena" placeholder="Mínimo 6 caracteres">
+              <span *ngIf="formRegistro.get('contrasena')?.touched && formRegistro.get('contrasena')?.invalid" class="error-message">
+                Contraseña.
+              </span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" [disabled]="formRegistro.invalid">
+              Registrarme
+            </button>
+
           </form>
         </div>
       </div>
+
     </div>
   </div>
 </div>
