@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   });
 
   mensajeError = '';
-  usuarioLogueado: User | null = null; // Guardará el usuario con sesión activa para mostrarlo
+  usuarioLogueado: User | null = null; // <- ESTO ES LO QUE TE FALTABA
 
   ngOnInit() {
     // Escucha de forma reactiva si hay un usuario logueado en Supabase actualmente
