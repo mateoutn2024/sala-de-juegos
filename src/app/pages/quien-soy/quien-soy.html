@@ -91,7 +91,7 @@
     <div class="col-lg-10 mt-4" *ngIf="!cargando">
       <div class="card shadow-sm border-0 p-4 bg-light">
         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-          <h3 class="fw-bold text-dark mb-0">📜 Elección del Juego Propio: Piedra, Papel o Tijera</h3>
+          <h3 class="fw-bold text-dark mb-0">📜 Elección del Juego Propio: PONG Arcade</h3>
           <span class="badge bg-secondary p-2">
             Repo: <a href="https://github.com/mateoutn2024" target="_blank" class="text-white text-decoration-none fw-bold">github.com/mateoutn2024</a>
           </span>
@@ -100,18 +100,17 @@
         <div class="p-3 bg-white rounded-3 border-juego-propio mb-4">
           <h5>🤔 ¿Por qué este juego?</h5>
           <p class="text-muted mb-0">
-            Se seleccionó el clásico esquema táctico de "Piedra, Papel o Tijera" con el objetivo de priorizar la optimización del almacenamiento en la base de datos y la fluidez de la experiencia del usuario. En lugar de impactar registros individuales por cada tiro rápido (lo que saturaría innecesariamente las cuotas de Supabase), el desarrollo se enfoca en gestionar un estado de rendimiento acumulado en la memoria reactiva del componente.
+            Se desarrolló una versión adaptada del clásico juego arcade de mesa "Pong" renderizado íntegramente sobre un Canvas bidimensional de HTML5. A diferencia de esquemas básicos de botones estáticos, esta implementación simula físicas vectoriales de rebote lineal, cálculo de colisiones por coordenadas y un oponente automatizado mediante IA fluida. Esto proporciona un entorno óptimo y robusto para evaluar de forma directa la motricidad fina y la velocidad de respuesta del usuario.
           </p>
         </div>
 
         <div class="p-3 bg-white rounded-3 border-como-jugar">
           <h5>🕹️ ¿Cómo se juega?</h5>
           <ol class="text-muted mb-0 ps-3">
-            <li>Hacé clic sobre cualquiera de los tres botones circulares de acción para definir tu jugada del turno (🪨 Piedra, 📄 Papel o ✂️ Tijera).</li>
-            <li>El sistema procesará de inmediato una respuesta aleatoria por parte de la CPU para resolver el enfrentamiento.</li>
-            <li>Las reglas clásicas aplican: la piedra vence a la tijera, la tijera destruye al papel, y el papel envuelve a la piedra.</li>
-            <li>Podés realizar todos los intentos que desees de manera consecutiva; el panel superior registrará tu volumen de partidas en tiempo real.</li>
-            <li><strong>Para registrar tu desempeño:</strong> Presioná el botón verde de "Guardar Promedio en Base de Datos". El sistema enviará un único log final a Supabase con tu porcentaje exacto de efectividad global de la sesión.</li>
+            <li>Controlá tu paleta de juego (ubicada en el margen izquierdo) desplazándola de forma vertical utilizando las teclas <strong>Arriba ⬆️ / Abajo ⬇️</strong> de tu teclado, o las alternativas estándares <strong>W / S</strong>.</li>
+            <li>Interceptá la pelota antes de que cruce tu línea de meta para evitar que el rival sume anotaciones, y redirigila estratégicamente hacia el campo de la CPU.</li>
+            <li>La partida cuenta con una velocidad regulada de ritmo pausado y posee condiciones claras de finalización por rendimiento: el primer participante en consolidar <strong>5 puntos</strong> gana el encuentro.</li>
+            <li><strong>Métricas y Persistencia en Base de Datos:</strong> Al decretarse el fin del juego, el sistema evalúa la proporción de tantos anotados contra los recibidos para computar tu <strong>porcentaje de efectividad promedio global</strong>, enviando un único registro persistente a Supabase de manera automática.</li>
           </ol>
         </div>
 
