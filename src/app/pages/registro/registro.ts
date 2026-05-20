@@ -15,13 +15,31 @@ export class RegistroComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  // Definición del formulario con todos los campos requeridos
+  // Definición del formulario con validaciones reales y estrictas
   formRegistro = new FormGroup({
-    correo: new FormControl('', [Validators.required, Validators.email]),
-    contrasena: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    nombre: new FormControl('', [Validators.required]),
-    apellido: new FormControl('', [Validators.required]),
-    edad: new FormControl('', [Validators.required, Validators.min(1)])
+    nombre: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$') // Permite solo letras, acentos y espacios (bloquea números)
+    ]),
+    apellido: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$') // Permite solo letras, acentos y espacios (bloquea números)
+    ]),
+    edad: new FormControl('', [
+      Validators.required, 
+      Validators.min(13), // Edad mínima lógica para ingresar a una plataforma de juegos
+      Validators.max(100) // Edad máxima para evitar datos incoherentes
+    ]),
+    correo: new FormControl('', [
+      Validators.required, 
+      Validators.email // Valida que tenga estructura real de correo: usuario@dominio.com
+    ]),
+    contrasena: new FormControl('', [
+      Validators.required, 
+      Validators.minLength(6) // El mínimo requerido por las políticas de Supabase Auth
+    ])
   });
 
   mensajeError = '';
