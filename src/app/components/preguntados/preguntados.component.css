@@ -1,0 +1,23 @@
+.container-quiz {
+  border-radius: 12px;
+}
+
+/* Limita el tamaño de la portada para mantener la consistencia */
+.cover-comic {
+  max-height: 280px;
+  object-fit: contain;
+  border: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+}
+
+/* Estilo limpio para los botones de las preguntas */
+.btn-option {
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.15s ease;
+}
+
+.btn-option:hover:not([disabled]) {
+  background-color: #f8f9fa;
+  transform: translateX(3px);
+}

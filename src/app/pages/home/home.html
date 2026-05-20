@@ -1,11 +1,14 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-12"> <div class="text-center mb-5">
+    <div class="col-md-12">
+      
+      <div class="text-center mb-5">
         <h1 class="fw-bold text-dark">Sala de Juegos</h1>
         <p class="text-muted fs-5">Seleccioná una de las opciones disponibles para comenzar a jugar o interactuar.</p>
       </div>
 
-      <div class="row g-4 justify-content-center">
+      <h5 class="text-secondary fw-semibold text-uppercase tracking-wider mb-3">🎮 Juegos Disponibles</h5>
+      <div class="row g-4 mb-5">
         
         <div class="col-md-4">
           <div class="card h-100 shadow-sm border-0">
@@ -38,17 +41,38 @@
         <div class="col-md-4">
           <div class="card h-100 shadow-sm border-0">
             <div class="card-body p-4 d-flex flex-column">
-              <h4 class="card-title fw-bold text-primary mb-3">Sala de Chat</h4>
+              <h4 class="card-title fw-bold text-primary mb-3">Harry Potter Preguntados</h4>
               <p class="card-text text-secondary flex-grow-1">
-                Conectate a la sala global para comunicarte en tiempo real con todos los usuarios que se encuentren logueados.
+                Demostrá tus conocimientos del mundo mágico adivinando el nombre del personaje a partir de su foto oficial en tiempo real.
               </p>
-              <button [routerLink]="['/components/chat']" class="btn btn-primary w-100 py-2 fw-bold mt-3">
-                Ingresar al Chat
+              <button [routerLink]="['/components/preguntados']" class="btn btn-primary w-100 py-2 fw-bold mt-3">
+                Ingresar al Juego
               </button>
             </div>
           </div>
         </div>
 
+      </div>
+
+      <h5 class="text-secondary fw-semibold text-uppercase tracking-wider mb-3">💬 Comunidad</h5>
+      <div class="row">
+        <div class="col-12">
+          <div class="card shadow-sm border-0 bg-light">
+            <div class="card-body p-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+              <div>
+                <h4 class="fw-bold text-dark mb-1">Sala de Chat Global</h4>
+                <p class="text-secondary mb-0">
+                  Conectate a la sala en vivo para comunicarte e interactuar con todos los usuarios de la plataforma que estén logueados.
+                </p>
+              </div>
+              <div class="text-nowrap">
+                <button [routerLink]="['/components/chat']" class="btn btn-dark px-4 py-2 fw-bold">
+                  Ingresar al Chat
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
