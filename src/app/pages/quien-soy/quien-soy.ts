@@ -1,33 +1,37 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
-import { GithubService } from '../../services/github.service';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-quien-soy',
   standalone: true,
-  imports: [CommonModule], 
+  imports: [CommonModule, HttpClientModule], 
   templateUrl: './quien-soy.html',
   styleUrls: ['./quien-soy.css']
 })
-
 export class QuienSoyComponent implements OnInit {
-  miPerfil: any = null;
+  datosGithub: any = null;
+  cargando: boolean = true;
+  errorApi: boolean = false;
 
-  constructor(
-    private githubService: GithubService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
-    this.githubService.getUserData().subscribe({
-      next: (data) => {
-        this.miPerfil = data;
-        this.cdr.detectChanges();
-        console.log(this.miPerfil); 
-      },
-      error: (err) => {
-        console.error('Error al conectar con GitHub', err);
-      }
-    });
+  ngOnInit() {
+    this.obtenerDatosGithub();
+  }
+
+  obtenerDatosGithub() {
+    this.http.get('https://api.github.com/users/mateoutn2024')
+      .subscribe({
+        next: (res: any) => {
+          this.datosGithub = res;
+          this.cargando = false;
+        },
+        error: (err) => {
+          console.error('Error al conectar con GitHub API:', err);
+          this.errorApi = true;
+          this.cargando = false;
+        }
+      });
   }
 }

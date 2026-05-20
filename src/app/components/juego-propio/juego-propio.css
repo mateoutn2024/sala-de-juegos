@@ -1,0 +1,22 @@
+.juego-box {
+  border: 1px solid #dee2e6;
+}
+
+.btn-jugar {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-jugar:hover {
+  transform: scale(1.1);
+  background-color: #f8f9fa;
+}
+
+.btn-jugar:active {
+  transform: scale(0.95);
+}

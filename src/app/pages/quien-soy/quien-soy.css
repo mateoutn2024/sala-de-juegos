@@ -1,0 +1,31 @@
+/* Tarjeta de perfil y layout */
+.avatar-contenedor {
+  width: 100px; 
+  height: 100px;
+  object-fit: cover;
+}
+
+.decoracion-linea {
+  width: 60px; 
+  height: 4px; 
+  background-color: #0d6efd; 
+  opacity: 1;
+}
+
+/* Ajustes para las barras de progreso */
+.progress {
+  height: 10px;
+}
+
+.progress-bar {
+  border-radius: 4px;
+}
+
+/* Bordes personalizados para la documentación */
+.border-juego-propio {
+  border-left: 4px solid #0d6efd !important;
+}
+
+.border-como-jugar {
+  border-left: 4px solid #198754 !important;
+}

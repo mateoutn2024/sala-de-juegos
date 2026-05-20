@@ -1,48 +1,122 @@
-<div class="container mt-5">
-  <div class="card shadow-sm mb-5" *ngIf="miPerfil; else cargando">
-    <div class="row g-0 align-items-center">
-      <div class="col-md-4 text-center p-3">
-        <img [src]="miPerfil.avatar_url" class="img-fluid rounded-circle shadow" alt="Foto de perfil" style="max-width: 200px;">
+<div class="container mt-5 pb-5">
+  
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-dark">🚀 Sobre Mí</h1>
+    <p class="lead text-muted">Datos del desarrollador y documentación del proyecto</p>
+    <hr class="mx-auto decoracion-linea">
+  </div>
+
+  <div class="row g-4 justify-content-center">
+    
+    <div *ngIf="cargando" class="col-12 text-center my-4">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="text-muted mt-2">Consumiendo datos desde la API de GitHub...</p>
+    </div>
+
+    <div *ngIf="errorApi && !cargando" class="col-md-4">
+      <div class="card shadow-sm border-0 text-center p-4 bg-white h-100">
+        <h3 class="text-danger">⚠️ Error</h3>
+        <p class="text-muted">No se pudieron cargar los datos dinámicos desde GitHub.</p>
+        <p class="small text-secondary">Link de respaldo: <a href="https://github.com/mateoutn2024" target="_blank">github.com/mateoutn2024</a></p>
       </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h2 class="card-title text-primary">{{ miPerfil.name }}</h2>
-          <p class="card-text lead">{{ miPerfil.bio }}</p>
-          <ul class="list-unstyled">
-            <li><strong>Usuario:</strong> {{ miPerfil.login }} </li>
-            <li><strong>Repositorios públicos:</strong> {{ miPerfil.public_repos }} </li>
-            <li><strong>Perfil:</strong> <a [href]="miPerfil.html_url" target="_blank">github.com/{{ miPerfil.login }}</a> </li>
-          </ul>
+    </div>
+
+    <div class="col-lg-4" *ngIf="datosGithub && !cargando">
+      <div class="card shadow-sm border-0 text-center p-4 h-100 bg-white">
+        
+        <img [src]="datosGithub.avatar_url" 
+             [alt]="datosGithub.name" 
+             class="mx-auto my-3 rounded-circle shadow-sm border border-2 border-primary avatar-contenedor">
+        
+        <h3 class="fw-bold text-dark mb-1">{{ datosGithub.name || datosGithub.login }}</h3>
+        <p class="text-muted small mb-1">Estudiante de Programación • UTN</p>
+        
+        <a [href]="datosGithub.html_url" target="_blank" class="d-block small text-primary fw-semibold mb-3 text-decoration-none">
+          🔗 github.com/mateoutn2024
+        </a>
+        
+        <p class="text-secondary px-2 small">
+          {{ datosGithub.bio || 'Desarrollador de software enfocado en tecnologías web eficientes y escalables.' }}
+        </p>
+
+        <div class="bg-light p-2 rounded-3 my-3 small text-start">
+          <div class="mb-1">📂 <strong>Repis Públicos:</strong> {{ datosGithub.public_repos }}</div>
+          <div>👥 <strong>Seguidores:</strong> {{ datosGithub.followers }}</div>
+        </div>
+        
+        <div class="mt-auto pt-3 border-top w-100">
+          <a [href]="datosGithub.html_url" target="_blank" class="btn btn-dark w-100 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm">
+            💻 Ir al perfil de GitHub
+          </a>
         </div>
       </div>
     </div>
-  </div>
 
-  <ng-template #cargando>
-    <div class="text-center my-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Cargando datos...</span>
+    <div class="col-lg-6" *ngIf="!cargando">
+      <div class="card shadow-sm border-0 p-4 h-100 bg-white">
+        <h4 class="fw-bold text-dark mb-4">🛠️ Stack Tecnológico</h4>
+        
+        <div class="mb-3">
+          <div class="d-flex justify-content-between mb-1 small fw-bold text-secondary">
+            <span>Angular & TypeScript</span>
+            <span>85%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 85%"></div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between mb-1 small fw-bold text-secondary">
+            <span>HTML5 & CSS3 (Bootstrap)</span>
+            <span>90%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 90%"></div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between mb-1 small fw-bold text-secondary">
+            <span>Bases de Datos & Supabase</span>
+            <span>75%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-info" role="progressbar" style="width: 75%"></div>
+          </div>
+        </div>
       </div>
-      <p class="mt-2">Obteniendo datos de GitHub...</p>
     </div>
-  </ng-template>
 
-<div class="card shadow-sm border-0 mt-5" style="border-radius: 15px; background-color: #f8f9fa;">
-  <div class="card-body p-4">
-    <h3 class="fw-bold text-dark border-bottom pb-2 mb-3">🎮 Mi Juego Propio: Poké-Trivia</h3>
-    
-    <h5 class="fw-bold text-primary">Descripción</h5>
-    <p class="text-muted mb-4">
-      Poké-Trivia es un juego de preguntas interactivo diseñado como homenaje al clásico "¿Quién es este Pokémon?". Utiliza la PokéAPI oficial para extraer dinámicamente imágenes de alta calidad del catálogo original de 151 criaturas y genera opciones aleatorias en tiempo real.
-    </p>
+    <div class="col-lg-10 mt-4" *ngIf="!cargando">
+      <div class="card shadow-sm border-0 p-4 bg-light">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <h3 class="fw-bold text-dark mb-0">📜 Elección del Juego Propio: Piedra, Papel o Tijera</h3>
+          <span class="badge bg-secondary p-2">
+            Repo: <a href="https://github.com/mateoutn2024" target="_blank" class="text-white text-decoration-none fw-bold">github.com/mateoutn2024</a>
+          </span>
+        </div>
+        
+        <div class="p-3 bg-white rounded-3 border-juego-propio mb-4">
+          <h5>🤔 ¿Por qué este juego?</h5>
+          <p class="text-muted mb-0">
+            Se seleccionó el clásico esquema táctico de "Piedra, Papel o Tijera" con el objetivo de priorizar la optimización del almacenamiento en la base de datos y la fluidez de la experiencia del usuario. En lugar de impactar registros individuales por cada tiro rápido (lo que saturaría innecesariamente las cuotas de Supabase), el desarrollo se enfoca en gestionar un estado de rendimiento acumulado en la memoria reactiva del componente.
+          </p>
+        </div>
 
-    <h5 class="fw-bold text-primary">Reglas del Juego</h5>
-    <ul class="text-muted list-group list-group-flush mb-0" style="background: transparent;">
-      <li class="list-group-item bg-transparent"><strong>1. Objetivo:</strong> Adivinar el nombre correcto del Pokémon oculto en la silueta.</li>
-      <li class="list-group-item bg-transparent"><strong>2. Dinámica:</strong> Se presentará una imagen oscurecida y 4 opciones de nombres. Al seleccionar una opción, se revelará la imagen real.</li>
-      <li class="list-group-item bg-transparent"><strong>3. Sistema de Rondas:</strong> Cada partida consta de 10 rondas únicas.</li>
-      <li class="list-group-item bg-transparent"><strong>4. Puntuación:</strong> Cada acierto suma 1 punto. Se necesitan al menos 5 puntos para considerar la partida como ganada.</li>
-      <li class="list-group-item bg-transparent"><strong>5. Registro:</strong> Al finalizar la ronda 10, los resultados y el rendimiento se guardan automáticamente en la base de datos de la sala de juegos.</li>
-    </ul>
+        <div class="p-3 bg-white rounded-3 border-como-jugar">
+          <h5>🕹️ ¿Cómo se juega?</h5>
+          <ol class="text-muted mb-0 ps-3">
+            <li>Hacé clic sobre cualquiera de los tres botones circulares de acción para definir tu jugada del turno (🪨 Piedra, 📄 Papel o ✂️ Tijera).</li>
+            <li>El sistema procesará de inmediato una respuesta aleatoria por parte de la CPU para resolver el enfrentamiento.</li>
+            <li>Las reglas clásicas aplican: la piedra vence a la tijera, la tijera destruye al papel, y el papel envuelve a la piedra.</li>
+            <li>Podés realizar todos los intentos que desees de manera consecutiva; el panel superior registrará tu volumen de partidas en tiempo real.</li>
+            <li><strong>Para registrar tu desempeño:</strong> Presioná el botón verde de "Guardar Promedio en Base de Datos". El sistema enviará un único log final a Supabase con tu porcentaje exacto de efectividad global de la sesión.</li>
+          </ol>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>

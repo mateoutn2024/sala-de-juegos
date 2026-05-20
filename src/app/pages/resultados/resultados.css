@@ -25,3 +25,19 @@
   border-radius: 20px;
   font-weight: bold;
 }
+
+.tabla-contenedor-scroll {
+  max-height: 350px; 
+  overflow-y: auto;  
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.tabla-contenedor-scroll table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #212529; /* Color oscuro para el encabezado */
+  color: white;
+  z-index: 1;
+}
