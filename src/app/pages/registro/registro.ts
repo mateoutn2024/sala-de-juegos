@@ -1,33 +1,65 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Para usar ngModel
-import { AuthService } from '../../services/auth.service';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registro.html',
-  styleUrl: './registro.css'
+  styleUrls: ['./registro.css']
 })
 export class RegistroComponent {
-  nuevoEmail: string = '';
-  nuevoPass: string = '';
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  constructor(private authService: AuthService, private router: Router) {}
+  // Definición del formulario con todos los campos requeridos
+  formRegistro = new FormGroup({
+    correo: new FormControl('', [Validators.required, Validators.email]),
+    contrasena: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    nombre: new FormControl('', [Validators.required]),
+    apellido: new FormControl('', [Validators.required]),
+    edad: new FormControl('', [Validators.required, Validators.min(1)])
+  });
 
-  async onRegistrar() {
+  mensajeError = '';
+
+  async registrarse() {
+    if (this.formRegistro.invalid) return;
+
     try {
-      const response = await this.authService.registrar(this.nuevoEmail, this.nuevoPass);
-      
+      const { correo, contrasena, nombre, apellido, edad } = this.formRegistro.value;
+
+      const response = await this.authService.registrar(
+        correo!,
+        contrasena!,
+        nombre!,
+        apellido!,
+        Number(edad!)
+      );
+
+      // Control de errores de Supabase
       if (response.error) {
-        alert("Error: " + response.error.message);
-      } else {
-        alert("¡Usuario creado con éxito!");
-        this.router.navigate(['/home']); // Te manda al home tras registrarte
+        // Emito un mensaje claro si el usuario ya existe en el sistema
+        if (response.error.message.includes('already') || response.error.status === 422) {
+          this.mensajeError = 'El usuario ya se encuentra registrado.';
+        } else {
+          this.mensajeError = response.error.message;
+        }
+        console.error(response.error);
+        return;
       }
-    } catch (error) {
-      console.error("Error inesperado:", error);
+
+      // Si se registra correctamente, Supabase inicia sesión de forma automática en el cliente local.
+      // Limpiamos alertas y navegamos directamente al Home
+      this.mensajeError = '';
+      this.router.navigate(['/home']);
+
+    } catch (error: any) {
+      this.mensajeError = 'Ocurrió un error inesperado durante el registro.';
+      console.error(error);
     }
   }
 }

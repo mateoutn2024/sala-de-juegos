@@ -1,24 +1,44 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-4">
-      <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-          <h3 class="text-center">Crear Cuenta</h3>
-        </div>
-        <div class="card-body">
-          <form (ngSubmit)="onRegistrar()">
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" name="email" [(ngModel)]="nuevoEmail" class="form-control" placeholder="tu@email.com" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Contraseña</label>
-              <input type="password" name="pass" [(ngModel)]="nuevoPass" class="form-control" placeholder="Mínimo 6 caracteres" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Registrarme</button>
-          </form>
-        </div>
+    <div class="col-md-6">
+      <h2 class="mb-4">Crear Cuenta</h2>
+
+      <div *ngIf="mensajeError" class="alert alert-danger" role="alert">
+        {{ mensajeError }}
       </div>
+
+      <form [formGroup]="formRegistro" (ngSubmit)="registrarse()">
+        
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" formControlName="nombre" placeholder="Tu nombre">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Apellido</label>
+          <input type="text" class="form-control" formControlName="apellido" placeholder="Tu apellido">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Edad</label>
+          <input type="number" class="form-control" formControlName="edad" placeholder="Tu edad">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Correo Electrónico</label>
+          <input type="email" class="form-control" formControlName="correo" placeholder="ejemplo@utn.edu.ar">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Contraseña</label>
+          <input type="password" class="form-control" formControlName="contrasena" placeholder="Mínimo 6 caracteres">
+        </div>
+
+        <button type="submit" class="btn btn-success w-100" [disabled]="formRegistro.invalid">
+          Registrarse e Ingresar
+        </button>
+
+      </form>
     </div>
   </div>
 </div>
