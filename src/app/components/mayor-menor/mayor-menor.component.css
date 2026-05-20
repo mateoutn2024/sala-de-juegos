@@ -1,36 +1,33 @@
-/* Caja del Juego */
-.container {
-  max-width: 600px;
-  background-color: #1a1a2e !important;
-  border: 2px solid #162447;
-}
-
-/* Diseño de la Carta Española */
-.card {
-  border-radius: 15px;
-  border: 4px solid #ffffff;
-  background: radial-gradient(circle, #ffffff 70%, #f0f0f0 100%) !important;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.card:hover {
-  transform: rotateY(10deg) scale(1.02);
-}
-
-/* Estilos de los números de la carta */
-.card h1 {
-  font-family: 'Georgia', serif;
-  color: #111111;
-}
-
-/* Botones Mayor / Menor */
-.btn-lg {
+/* Contenedor principal alineado con el diseño limpio */
+.container-game {
   border-radius: 12px;
-  font-weight: 700;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Diseño de la Carta Española Limpia */
+.card-espanola {
+  width: 11rem;
+  height: 16rem;
+  border-radius: 12px;
+  border: 2px solid #dee2e6;
+  background-color: #f8f9fa;
+  transition: transform 0.2s ease;
+}
+
+.card-espanola:hover {
+  transform: translateY(-3px);
+}
+
+.card-number {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #212529;
+}
+
+/* Estilo para los botones de acción */
+.btn-action {
+  border-radius: 8px;
   transition: transform 0.1s ease;
 }
 
-.btn-lg:active {
-  transform: scale(0.95);
+.btn-action:active {
+  transform: scale(0.97);
 }

@@ -22,7 +22,7 @@ export class MayorMenorComponent implements OnInit {
   intentos: number = 0;
   maxIntentos: number = 10;
   juegoTerminado: boolean = false;
-  mensaje: string = '¿La siguiente carta será mayor o menor?';
+  mensaje: string = '¿La siguiente carta será mayor, menor o igual?';
 
   constructor(private juegosService: JuegosService) {}
 
@@ -45,30 +45,39 @@ export class MayorMenorComponent implements OnInit {
     this.mensaje = '¡Comienza el juego!';
   }
 
-  jugar(eleccion: 'mayor' | 'menor') {
+  jugar(eleccion: 'mayor' | 'menor' | 'igual') {
     if (this.juegoTerminado) return;
 
     this.cartaSiguiente = this.generarCarta();
     this.intentos++;
 
-    if (this.cartaSiguiente.numero === this.cartaActual.numero) {
-      this.mensaje = `🃏 Salió el mismo número (${this.cartaSiguiente.numero} de ${this.cartaSiguiente.palo}). No sumás puntos.`;
-    } else if (
-      (eleccion === 'mayor' && this.cartaSiguiente.numero > this.cartaActual.numero) ||
-      (eleccion === 'menor' && this.cartaSiguiente.numero < this.cartaActual.numero)
-    ) {
+    const nActual = this.cartaActual.numero;
+    const nSiguiente = this.cartaSiguiente.numero;
+
+    if (eleccion === 'igual' && nSiguiente === nActual) {
       this.puntos++;
-      this.mensaje = `✅ ¡Acertaste! Salió el ${this.cartaSiguiente.numero} de ${this.cartaSiguiente.palo}.`;
+      this.mensaje = `✅ ¡Acertaste! Salió el mismo número: ${nSiguiente} de ${this.cartaSiguiente.palo}.`;
+    } else if (eleccion === 'mayor' && nSiguiente > nActual) {
+      this.puntos++;
+      this.mensaje = `✅ ¡Acertaste! Salió el ${nSiguiente} de ${this.cartaSiguiente.palo}.`;
+    } else if (eleccion === 'menor' && nSiguiente < nActual) {
+      this.puntos++;
+      this.mensaje = `✅ ¡Acertaste! Salió el ${nSiguiente} de ${this.cartaSiguiente.palo}.`;
     } else {
-      this.mensaje = `❌ ¡Le erraste! Salió el ${this.cartaSiguiente.numero} de ${this.cartaSiguiente.palo}.`;
+      this.mensaje = `❌ ¡Le erraste! Salió el ${nSiguiente} de ${this.cartaSiguiente.palo}.`;
     }
 
     this.cartaActual = this.cartaSiguiente;
 
     if (this.intentos >= this.maxIntentos) {
       this.juegoTerminado = true;
-      const ganoJuego = this.puntos >= 5; // Gana si acierta el 50% o más
-      this.juegosService.guardarResultado('Mayor o Menor', ganoJuego, `Consiguió ${this.puntos} aciertos de ${this.maxIntentos} intentos`);
+      const ganoJuego = this.puntos >= 5; 
+      // Guarda en Supabase usando tu estructura existente
+      this.juegosService.guardarResultado(
+        'Mayor o Menor', 
+        ganoJuego, 
+        `Consigió ${this.puntos} aciertos de ${this.maxIntentos} intentos`
+      );
     }
   }
 }
