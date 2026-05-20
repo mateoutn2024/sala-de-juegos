@@ -1,39 +1,38 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-5">
-      <div class="card shadow-lg border-0">
-        <div class="card-header bg-dark text-white text-center py-3">
-          <h4 class="mb-0">¡Bienvenido de nuevo!</h4>
-        </div>
-        <div class="card-body p-4">
-          <form (ngSubmit)="onLogin()">
-            <div class="mb-3">
-              <label class="form-label font-weight-bold">Correo Electrónico</label>
-              <input type="email" name="email" [(ngModel)]="email" 
-                     class="form-control form-control-lg" placeholder="ejemplo@correo.com" required>
-            </div>
-            
-            <div class="mb-4">
-              <label class="form-label font-weight-bold">Contraseña</label>
-              <input type="password" name="pass" [(ngModel)]="pass" 
-                     class="form-control form-control-lg" placeholder="••••••••" required>
-            </div>
+    <div class="col-md-6">
+      <h2 class="mb-4">Iniciar Sesión</h2>
 
-            <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm mb-3">
-              Ingresar
-            </button>
-            
-            <div class="text-center">
-              <button type="button" (click)="accesoRapido()" class="btn btn-outline-secondary btn-sm">
-                Cargar usuario de prueba
-              </button>
-            </div>
-          </form>
-        </div>
-        <div class="card-footer text-center py-3">
-          <small>¿No tienes cuenta? <a routerLink="/registro" class="text-primary">Regístrate aquí</a></small>
-        </div>
+      <div *ngIf="mensajeError" class="alert alert-danger">
+        {{ mensajeError }}
       </div>
+
+      <form [formGroup]="formLogin" (ngSubmit)="ingresar()">
+        
+        <div class="mb-3">
+          <label class="form-label">Correo Electrónico</label>
+          <input type="email" class="form-control" formControlName="correo" placeholder="ejemplo@utn.edu.ar">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Contraseña</label>
+          <input type="password" class="form-control" formControlName="clave" placeholder="Mínimo 6 caracteres">
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="formLogin.invalid">
+          Ingresar
+        </button>
+      </form>
+
+      <hr>
+
+      <h5 class="text-center mb-3">Acceso Rápido para Pruebas</h5>
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="accesoRapido('admin@sala.com', '123456')">Admin</button>
+        <button class="btn btn-secondary" (click)="accesoRapido('jugador1@sala.com', '123456')">Jugador 1</button>
+        <button class="btn btn-secondary" (click)="accesoRapido('invitado@sala.com', '123456')">Invitado</button>
+      </div>
+
     </div>
   </div>
 </div>

@@ -1,39 +1,46 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
 export class LoginComponent {
-  email: string = '';
-  pass: string = '';
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  constructor(private authService: AuthService, private router: Router) {}
+  // Formulario reactivo con validaciones estrictas
+  formLogin = new FormGroup({
+    correo: new FormControl('', [Validators.required, Validators.email]),
+    clave: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
 
-  async onLogin() {
-    try {
-      const response = await this.authService.iniciarSesion(this.email, this.pass);
-      
-      if (response.error) {
-        alert("Error al iniciar sesión: " + response.error.message);
-      } else {
-        console.log("Sesión iniciada:", response.data);
-        this.router.navigate(['/home']);
-      }
-    } catch (error) {
-      alert("Ocurrió un error inesperado.");
-    }
+  mensajeError = '';
+
+  // Función para los 3 botones de prueba
+  accesoRapido(correo: string, clave: string) {
+    this.formLogin.patchValue({ correo, clave });
+    this.ingresar();
   }
 
-  accesoRapido() {
-    this.email = 'admin@admin.com';
-    this.pass = '123456';
+  // Lógica principal de inicio de sesión
+  async ingresar() {
+    if (this.formLogin.invalid) return;
+
+    try {
+      const { correo, clave } = this.formLogin.value;
+      await this.authService.iniciarSesion(correo!, clave!);
+      this.mensajeError = '';
+      this.router.navigate(['/home']);
+    } catch (error: any) {
+      this.mensajeError = 'Credenciales inválidas o usuario no encontrado.';
+      console.error(error);
+    }
   }
 }
