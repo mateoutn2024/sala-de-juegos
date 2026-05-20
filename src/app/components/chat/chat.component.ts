@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core'; // <-- 1. Importar ChangeDetectorRef
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { createClient, SupabaseClient, RealtimeChannel } from '@supabase/supabase-js';
@@ -29,7 +29,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   nuevoMensaje: string = '';
   usuarioActual: string = '';
 
-  constructor(private authService: AuthService) {
+  // 2. Agregar 'private cdr: ChangeDetectorRef' al constructor
+  constructor(private authService: AuthService, private cdr: ChangeDetectorRef) {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
 
@@ -42,6 +43,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   private async obtenerUsuarioActual() {
     const usuario = await this.authService.getUsuarioActual();
     this.usuarioActual = usuario?.email || 'Anónimo';
+    this.cdr.detectChanges(); 
   }
 
   ngOnDestroy() {
@@ -59,6 +61,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (data) {
       this.mensajes = data;
       this.scrollAlFinal();
+      this.cdr.detectChanges(); 
     }
   }
 
@@ -68,6 +71,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_mensajes' }, (payload) => {
         this.mensajes.push(payload.new as Mensaje);
         this.scrollAlFinal();
+        this.cdr.detectChanges(); 
       })
       .subscribe();
   }

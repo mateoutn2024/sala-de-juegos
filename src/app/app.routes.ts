@@ -16,9 +16,9 @@ export const routes: Routes = [
   { path: 'quien-soy', component: QuienSoyComponent },
   
   // Rutas del Sprint 3 protegidas por seguridad
-  { path: 'juegos/ahorcado', component: AhorcadoComponent, canActivate: [authGuard] },
-  { path: 'juegos/mayor-menor', component: MayorMenorComponent, canActivate: [authGuard] },
-  { path: 'chat', component: ChatComponent, canActivate: [authGuard] },
+  { path: 'components/ahorcado', component: AhorcadoComponent, canActivate: [authGuard] },
+  { path: 'components/mayor-menor', component: MayorMenorComponent, canActivate: [authGuard] },
+  { path: 'components/chat', component: ChatComponent, canActivate: [authGuard] },
   
   { path: '**', redirectTo: '/home' }
 ];
