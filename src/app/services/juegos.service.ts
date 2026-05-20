@@ -33,4 +33,17 @@ export class JuegosService {
       console.error('Error al guardar el resultado:', error.message);
     }
   }
+
+  async obtenerResultados() {
+    const { data, error } = await this.supabase
+      .from('resultados_juegos')
+      .select('*')
+      .order('fecha_hora', { ascending: false });
+
+    if (error) {
+      console.error('Error al traer los resultados:', error.message);
+      return [];
+    }
+    return data;
+  }
 }

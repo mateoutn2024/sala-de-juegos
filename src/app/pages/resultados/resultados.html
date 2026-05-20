@@ -1,0 +1,137 @@
+<div class="container mt-5 pb-5">
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-dark">🏆 Tablas de Resultados globales</h1>
+    <p class="lead text-muted">Historial de partidas ordenadas por mejor desempeño</p>
+  </div>
+
+  <div *ngIf="cargando" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="text-muted mt-2">Consultando registros en la base de datos...</p>
+  </div>
+
+  <div class="row g-4" *ngIf="!cargando">
+    
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 p-4 tabla-card">
+        <h3 class="fw-bold text-dark mb-3">🪢 Historial: Ahorcado</h3>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Jugador</th>
+                <th>Resultado</th>
+                <th>Detalles</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of listaAhorcado">
+                <td class="fw-bold">{{ r.usuario }}</td>
+                <td>
+                  <span class="badge" [ngClass]="r.gano ? 'bg-success' : 'bg-danger'">
+                    {{ r.gano ? 'GANÓ' : 'PERDIÓ' }}
+                  </span>
+                </td>
+                <td class="text-muted text-sm">{{ r.detalles }}</td>
+              </tr>
+              <tr *ngIf="listaAhorcado.length === 0">
+                <td colspan="3" class="text-center text-muted py-3">No hay partidas registradas aún.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 p-4 tabla-card">
+        <h3 class="fw-bold text-dark mb-3">🃏 Historial: Mayor o Menor</h3>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Jugador</th>
+                <th>Resultado</th>
+                <th>Aciertos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of listaMayorMenor">
+                <td class="fw-bold">{{ r.usuario }}</td>
+                <td>
+                  <span class="badge" [ngClass]="r.gano ? 'bg-success' : 'bg-danger'">
+                    {{ r.gano ? 'COMPLETO' : 'FALLÓ' }}
+                  </span>
+                </td>
+                <td class="text-muted text-sm fw-bold text-primary">{{ r.detalles }}</td>
+              </tr>
+              <tr *ngIf="listaMayorMenor.length === 0">
+                <td colspan="3" class="text-center text-muted py-3">No hay partidas registradas aún.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 p-4 tabla-card">
+        <h3 class="fw-bold text-dark mb-3">🔴 Historial: Poké-Trivia</h3>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Jugador</th>
+                <th>Rango</th>
+                <th>Rendimiento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of listaPokeTrivia">
+                <td class="fw-bold">{{ r.usuario }}</td>
+                <td>
+                  <span class="badge" [ngClass]="r.gano ? 'bg-warning text-dark' : 'bg-secondary'">
+                    {{ r.gano ? 'Maestro' : 'Entrenador' }}
+                  </span>
+                </td>
+                <td class="text-muted text-sm fw-bold text-success">{{ r.detalles }}</td>
+              </tr>
+              <tr *ngIf="listaPokeTrivia.length === 0">
+                <td colspan="3" class="text-center text-muted py-3">No hay partidas registradas aún.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 p-4 tabla-card">
+        <h3 class="fw-bold text-dark mb-3">🎮 Historial: Juego Propio</h3>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Jugador</th>
+                <th>Estado</th>
+                <th>Puntaje</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of listaJuegoPropio">
+                <td class="fw-bold">{{ r.usuario }}</td>
+                <td>
+                  <span class="badge bg-info text-dark">Finalizado</span>
+                </td>
+                <td class="text-muted text-sm">{{ r.detalles }}</td>
+              </tr>
+              <tr *ngIf="listaJuegoPropio.length === 0">
+                <td colspan="3" class="text-center text-muted py-3">No hay partidas registradas aún.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

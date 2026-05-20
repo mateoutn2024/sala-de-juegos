@@ -27,23 +27,22 @@
     </div>
   </ng-template>
 
-  <div class="card border-info shadow-sm mt-4">
-    <div class="card-header bg-info text-white">
-      <h3 class="mb-0">Elección de Juego Propio: Adivina el Número</h3>
-    </div>
-    <div class="card-body">
-      <p><strong>¿Por qué este juego?:</strong> He seleccionado este juego porque permite medir de forma efectiva la <strong>capacidad de deducción lógica</strong> y la memoria de trabajo del usuario de manera simple y dinámica.</p>
-      
-      <p><strong>Cómo jugar:</strong> 
-        <br>1. El sistema genera un número aleatorio secreto entre 1 y 100.
-        <br>2. El jugador debe ingresar un número para intentar adivinarlo.
-        <br>3. Tras cada intento, la aplicación indicará si el número secreto es <strong>mayor</strong> o <strong>menor</strong> al ingresado.
-      </p>
+<div class="card shadow-sm border-0 mt-5" style="border-radius: 15px; background-color: #f8f9fa;">
+  <div class="card-body p-4">
+    <h3 class="fw-bold text-dark border-bottom pb-2 mb-3">🎮 Mi Juego Propio: Poké-Trivia</h3>
+    
+    <h5 class="fw-bold text-primary">Descripción</h5>
+    <p class="text-muted mb-4">
+      Poké-Trivia es un juego de preguntas interactivo diseñado como homenaje al clásico "¿Quién es este Pokémon?". Utiliza la PokéAPI oficial para extraer dinámicamente imágenes de alta calidad del catálogo original de 151 criaturas y genera opciones aleatorias en tiempo real.
+    </p>
 
-      <p><strong>Condiciones de finalización:</strong> 
-        <br>• <strong>Victoria:</strong> El jugador encuentra el número secreto antes de agotar sus intentos.
-        <br>• <strong>Derrota:</strong> El jugador agota todos sus intentos sin haber acertado el número.
-      </p>
-    </div>
+    <h5 class="fw-bold text-primary">Reglas del Juego</h5>
+    <ul class="text-muted list-group list-group-flush mb-0" style="background: transparent;">
+      <li class="list-group-item bg-transparent"><strong>1. Objetivo:</strong> Adivinar el nombre correcto del Pokémon oculto en la silueta.</li>
+      <li class="list-group-item bg-transparent"><strong>2. Dinámica:</strong> Se presentará una imagen oscurecida y 4 opciones de nombres. Al seleccionar una opción, se revelará la imagen real.</li>
+      <li class="list-group-item bg-transparent"><strong>3. Sistema de Rondas:</strong> Cada partida consta de 10 rondas únicas.</li>
+      <li class="list-group-item bg-transparent"><strong>4. Puntuación:</strong> Cada acierto suma 1 punto. Se necesitan al menos 5 puntos para considerar la partida como ganada.</li>
+      <li class="list-group-item bg-transparent"><strong>5. Registro:</strong> Al finalizar la ronda 10, los resultados y el rendimiento se guardan automáticamente en la base de datos de la sala de juegos.</li>
+    </ul>
   </div>
 </div>

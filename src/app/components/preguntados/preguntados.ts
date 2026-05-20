@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { timeout } from 'rxjs/operators';
+import { JuegosService } from '../../services/juegos.service';
 
 interface Pokemon {
   name: string;
@@ -31,7 +32,7 @@ export class PreguntadosComponent implements OnInit {
   respondido: boolean = false;
   mensaje: string = '¿Quién es este Pokémon?';
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private juegosService: JuegosService) {}
 
   ngOnInit() {
     this.cargarPokemonAPI();
