@@ -1,49 +1,121 @@
-<div class="container mt-5">
-  <div class="card shadow-sm mb-5" *ngIf="miPerfil; else cargando">
-    <div class="row g-0 align-items-center">
-      <div class="col-md-4 text-center p-3">
-        <img [src]="miPerfil.avatar_url" class="img-fluid rounded-circle shadow" alt="Foto de perfil" style="max-width: 200px;">
+<div class="container mt-5 pb-5">
+  
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-dark">🚀 Sobre Mí</h1>
+    <p class="lead text-muted">Datos del desarrollador y documentación del proyecto</p>
+    <hr class="mx-auto decoracion-linea">
+  </div>
+
+  <div class="row g-4 justify-content-center">
+    
+    <div *ngIf="cargando" class="col-12 text-center my-4">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="text-muted mt-2">Consumiendo datos desde la API de GitHub...</p>
+    </div>
+
+    <div *ngIf="errorApi && !cargando" class="col-md-4">
+      <div class="card shadow-sm border-0 text-center p-4 bg-white h-100">
+        <h3 class="text-danger">⚠️ Error</h3>
+        <p class="text-muted">No se pudieron cargar los datos dinámicos desde GitHub.</p>
+        <p class="small text-secondary">Link de respaldo: <a href="https://github.com/mateoutn2024" target="_blank">github.com/mateoutn2024</a></p>
       </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h2 class="card-title text-primary">{{ miPerfil.name }}</h2>
-          <p class="card-text lead">{{ miPerfil.bio }}</p>
-          <ul class="list-unstyled">
-            <li><strong>Usuario:</strong> {{ miPerfil.login }} </li>
-            <li><strong>Repositorios públicos:</strong> {{ miPerfil.public_repos }} </li>
-            <li><strong>Perfil:</strong> <a [href]="miPerfil.html_url" target="_blank">github.com/{{ miPerfil.login }}</a> </li>
-          </ul>
+    </div>
+
+    <div class="col-lg-4" *ngIf="datosGithub && !cargando">
+      <div class="card shadow-sm border-0 text-center p-4 h-100 bg-white">
+        
+        <img [src]="datosGithub.avatar_url" 
+             [alt]="datosGithub.name" 
+             class="mx-auto my-3 rounded-circle shadow-sm border border-2 border-primary avatar-contenedor">
+        
+        <h3 class="fw-bold text-dark mb-1">{{ datosGithub.name || datosGithub.login }}</h3>
+        <p class="text-muted small mb-1">Estudiante de Programación • UTN</p>
+        
+        <a [href]="datosGithub.html_url" target="_blank" class="d-block small text-primary fw-semibold mb-3 text-decoration-none">
+          🔗 github.com/mateoutn2024
+        </a>
+        
+        <p class="text-secondary px-2 small">
+          {{ datosGithub.bio || 'Desarrollador de software enfocado en tecnologías web eficientes y escalables.' }}
+        </p>
+
+        <div class="bg-light p-2 rounded-3 my-3 small text-start">
+          <div class="mb-1">📂 <strong>Repis Públicos:</strong> {{ datosGithub.public_repos }}</div>
+          <div>👥 <strong>Seguidores:</strong> {{ datosGithub.followers }}</div>
+        </div>
+        
+        <div class="mt-auto pt-3 border-top w-100">
+          <a [href]="datosGithub.html_url" target="_blank" class="btn btn-dark w-100 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm">
+            💻 Ir al perfil de GitHub
+          </a>
         </div>
       </div>
     </div>
-  </div>
 
-  <ng-template #cargando>
-    <div class="text-center my-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Cargando datos...</span>
+    <div class="col-lg-6" *ngIf="!cargando">
+      <div class="card shadow-sm border-0 p-4 h-100 bg-white">
+        <h4 class="fw-bold text-dark mb-4">🛠️ Stack Tecnológico</h4>
+        
+        <div class="mb-3">
+          <div class="d-flex justify-content-between mb-1 small fw-bold text-secondary">
+            <span>Angular & TypeScript</span>
+            <span>85%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 85%"></div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between mb-1 small fw-bold text-secondary">
+            <span>HTML5 & CSS3 (Bootstrap)</span>
+            <span>90%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 90%"></div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between mb-1 small fw-bold text-secondary">
+            <span>Bases de Datos & Supabase</span>
+            <span>75%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-info" role="progressbar" style="width: 75%"></div>
+          </div>
+        </div>
       </div>
-      <p class="mt-2">Obteniendo datos de GitHub...</p>
     </div>
-  </ng-template>
 
-  <div class="card border-info shadow-sm mt-4">
-    <div class="card-header bg-info text-white">
-      <h3 class="mb-0">Elección de Juego Propio: Adivina el Número</h3>
-    </div>
-    <div class="card-body">
-      <p><strong>¿Por qué este juego?:</strong> He seleccionado este juego porque permite medir de forma efectiva la <strong>capacidad de deducción lógica</strong> y la memoria de trabajo del usuario de manera simple y dinámica.</p>
-      
-      <p><strong>Cómo jugar:</strong> 
-        <br>1. El sistema genera un número aleatorio secreto entre 1 y 100.
-        <br>2. El jugador debe ingresar un número para intentar adivinarlo.
-        <br>3. Tras cada intento, la aplicación indicará si el número secreto es <strong>mayor</strong> o <strong>menor</strong> al ingresado.
-      </p>
+    <div class="col-lg-10 mt-4" *ngIf="!cargando">
+      <div class="card shadow-sm border-0 p-4 bg-light">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <h3 class="fw-bold text-dark mb-0">📜 Elección del Juego Propio: PONG Arcade</h3>
+          <span class="badge bg-secondary p-2">
+            Repo: <a href="https://github.com/mateoutn2024" target="_blank" class="text-white text-decoration-none fw-bold">github.com/mateoutn2024</a>
+          </span>
+        </div>
+        
+        <div class="p-3 bg-white rounded-3 border-juego-propio mb-4">
+          <h5>🤔 ¿Por qué este juego?</h5>
+          <p class="text-muted mb-0">
+            Se desarrolló una versión adaptada del clásico juego arcade de mesa "Pong" renderizado íntegramente sobre un Canvas bidimensional de HTML5. A diferencia de esquemas básicos de botones estáticos, esta implementación simula físicas vectoriales de rebote lineal, cálculo de colisiones por coordenadas y un oponente automatizado mediante IA fluida. Esto proporciona un entorno óptimo y robusto para evaluar de forma directa la motricidad fina y la velocidad de respuesta del usuario.
+          </p>
+        </div>
 
-      <p><strong>Condiciones de finalización:</strong> 
-        <br>• <strong>Victoria:</strong> El jugador encuentra el número secreto antes de agotar sus intentos.
-        <br>• <strong>Derrota:</strong> El jugador agota todos sus intentos sin haber acertado el número.
-      </p>
+        <div class="p-3 bg-white rounded-3 border-como-jugar">
+          <h5>🕹️ ¿Cómo se juega?</h5>
+          <ol class="text-muted mb-0 ps-3">
+            <li>Controlá tu paleta de juego (ubicada en el margen izquierdo) desplazándola de forma vertical utilizando las teclas <strong>Arriba ⬆️ / Abajo ⬇️</strong> de tu teclado, o las alternativas estándares <strong>W / S</strong>.</li>
+            <li>Interceptá la pelota antes de que cruce tu línea de meta para evitar que el rival sume anotaciones, y redirigila estratégicamente hacia el campo de la CPU.</li>
+            <li>La partida cuenta con una velocidad regulada de ritmo pausado y posee condiciones claras de finalización por rendimiento: el primer participante en consolidar <strong>5 puntos</strong> gana el encuentro.</li>
+            <li><strong>Métricas y Persistencia en Base de Datos:</strong> Al decretarse el fin del juego, el sistema evalúa la proporción de tantos anotados contra los recibidos para computar tu <strong>porcentaje de efectividad promedio global</strong>, enviando un único registro persistente a Supabase de manera automática.</li>
+          </ol>
+        </div>
+
+      </div>
     </div>
+
   </div>
 </div>

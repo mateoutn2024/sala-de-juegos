@@ -1,0 +1,43 @@
+.tabla-card {
+  border-radius: 15px;
+  background-color: #ffffff;
+  min-height: 320px;
+}
+
+.table th {
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: none;
+}
+
+.table td {
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+.text-sm {
+  font-size: 0.85rem;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.tabla-contenedor-scroll {
+  max-height: 350px; 
+  overflow-y: auto;  
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.tabla-contenedor-scroll table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #212529; /* Color oscuro para el encabezado */
+  color: white;
+  z-index: 1;
+}

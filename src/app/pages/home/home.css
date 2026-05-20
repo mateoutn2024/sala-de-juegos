@@ -1,16 +1,44 @@
-/* Estilo base para marchar con el ecosistema de la app */
-.card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  background-color: #ffffff;
+/* Estilos generales para las tarjetas de juego */
+.game-card {
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 
-/* Efecto hover sutil y limpio */
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+.game-card:hover {
+  transform: scale(1.03);
 }
 
-/* Títulos y textos integrados */
-h1 {
-  letter-spacing: -0.5px;
+/* Estilos específicos para la tarjeta de Preguntados (Poké-Trivia) */
+.poke-card {
+  background-color: #dc0a2d;
+  color: white;
+}
+
+.poke-title {
+  color: #ffcb05 !important;
+  text-shadow: 2px 2px 0 #3b4cca;
+}
+
+.poke-btn {
+  background-color: #ffcb05;
+  color: #3b4cca;
+  border: 2px solid #3b4cca;
+}
+
+.poke-btn:hover {
+  background-color: #ffe066;
+  color: #3b4cca;
+}
+
+/* Estilos para la tarjeta del Chat */
+.chat-card {
+  border-radius: 15px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  transition: transform 0.2s ease-in-out;
+}
+
+.chat-card:hover {
+  transform: scale(1.02);
 }
