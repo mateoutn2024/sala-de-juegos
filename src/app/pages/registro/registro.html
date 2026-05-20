@@ -1,8 +1,8 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-5">
-      
-      <div *ngIf="mensajeError" class="alert alert-danger mb-3" role="alert">
+
+      <div *ngIf="mensajeError" class="alert alert-danger mb-3 text-center py-2" role="alert">
         {{ mensajeError }}
       </div>
 
@@ -17,26 +17,41 @@
             <div class="mb-3">
               <label class="form-label fw-semibold">Nombre</label>
               <input type="text" class="form-control" formControlName="nombre" placeholder="Tu nombre">
+              <small *ngIf="formRegistro.get('nombre')?.touched && formRegistro.get('nombre')?.invalid" class="text-danger d-block mt-1">
+                El nombre es requerido.
+              </small>
             </div>
 
             <div class="mb-3">
               <label class="form-label fw-semibold">Apellido</label>
               <input type="text" class="form-control" formControlName="apellido" placeholder="Tu apellido">
+              <small *ngIf="formRegistro.get('apellido')?.touched && formRegistro.get('apellido')?.invalid" class="text-danger d-block mt-1">
+                El apellido es requerido.
+              </small>
             </div>
 
             <div class="mb-3">
               <label class="form-label fw-semibold">Edad</label>
               <input type="number" class="form-control" formControlName="edad" placeholder="Tu edad">
+              <small *ngIf="formRegistro.get('edad')?.touched && formRegistro.get('edad')?.invalid" class="text-danger d-block mt-1">
+                La edad debe ser mayor a 0.
+              </small>
             </div>
 
             <div class="mb-3">
               <label class="form-label fw-semibold">Email</label>
               <input type="email" class="form-control" formControlName="correo" placeholder="tu@email.com">
+              <small *ngIf="formRegistro.get('correo')?.touched && formRegistro.get('correo')?.invalid" class="text-danger d-block mt-1">
+                Ingresá un correo electrónico válido.
+              </small>
             </div>
 
             <div class="mb-4">
               <label class="form-label fw-semibold">Contraseña</label>
               <input type="password" class="form-control" formControlName="contrasena" placeholder="Mínimo 6 caracteres">
+              <small *ngIf="formRegistro.get('contrasena')?.touched && formRegistro.get('contrasena')?.invalid" class="text-danger d-block mt-1">
+                La contraseña debe tener al menos 6 caracteres.
+              </small>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" [disabled]="formRegistro.invalid">
