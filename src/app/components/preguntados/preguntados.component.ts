@@ -1,13 +1,12 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { JuegosService } from '../../services/juegos.service';
 import { timeout } from 'rxjs/operators';
 
-interface Personaje {
+interface Digimon {
   name: string;
   image: string;
-  house: string;
 }
 
 @Component({
@@ -18,9 +17,9 @@ interface Personaje {
   styleUrls: ['./preguntados.component.css']
 })
 export class PreguntadosComponent implements OnInit {
-  private poolPersonajes: Personaje[] = [];
+  private poolDigimon: Digimon[] = [];
   
-  personajeActual!: Personaje;
+  digimonActual!: Digimon;
   opciones: string[] = [];
   puntos: number = 0;
   rondaActual: number = 0;
@@ -30,51 +29,43 @@ export class PreguntadosComponent implements OnInit {
   respondido: boolean = false;
   cargando: boolean = true;
 
+  // Distractores fijos de emergencia
   private nombresDistractores = [
-    'Harry Potter', 'Hermione Granger', 'Ron Weasley', 'Albus Dumbledore',
-    'Severus Snape', 'Rubeus Hagrid', 'Lord Voldemort', 'Draco Malfoy',
-    'Luna Lovegood', 'Neville Longbottom', 'Ginny Weasley', 'Sirius Black',
-    'Remus Lupin', 'Bellatrix Lestrange', 'Minerva McGonagall', 'Cedric Diggory'
+    'Agumon', 'Gabumon', 'Patamon', 'Gatomon', 'Tentomon', 'Biyomon',
+    'Palmon', 'Gomamon', 'Greymon', 'Garurumon', 'Angemon', 'Appliedmon',
+    'Devimon', 'Leomon', 'Ogunamon', 'Veemon', 'Guilmon', 'Renamon'
   ];
 
-  // Inyectamos PLATFORM_ID para saber si estamos en el servidor o en el navegador
-  constructor(
-    private http: HttpClient, 
-    private juegosService: JuegosService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  constructor(private http: HttpClient, private juegosService: JuegosService) {}
 
   ngOnInit() {
-    // Si se está ejecutando en el servidor (SSR), no hacemos nada para que no se congele
-    if (isPlatformBrowser(this.platformId)) {
-      this.cargarPersonajes();
-    }
+    this.cargarDigimonAPI();
   }
 
-  cargarPersonajes() {
+  cargarDigimonAPI() {
     this.cargando = true;
     
-    this.http.get<any[]>('https://hp-api.onrender.com/api/characters')
-      .pipe(timeout(2000)) // Si tarda más de 2 segundos, corta y va al error
+    // Le pegamos a la API pública trayendo la primera página de criaturas (contiene los más conocidos)
+    this.http.get<any>('https://digimon-api.com/api/v1/digimon?pageSize=40')
+      .pipe(timeout(3000))
       .subscribe({
         next: (res) => {
-          if (res && Array.isArray(res)) {
-            this.poolPersonajes = res
-              .filter(p => p.name && p.image && p.image.trim() !== '')
-              .map(p => ({
-                name: p.name,
-                image: p.image,
-                house: p.house || 'Ninguna'
+          if (res && res.content && Array.isArray(res.content)) {
+            this.poolDigimon = res.content
+              .filter((d: any) => d.name && d.image)
+              .map((d: any) => ({
+                name: d.name,
+                image: d.image
               }));
           }
 
-          if (this.poolPersonajes.length === 0) {
+          if (this.poolDigimon.length === 0) {
             this.usarFallbackLocal();
           }
           this.iniciarJuego();
         },
         error: (err) => {
-          console.warn('API externa lenta o inaccesible. Activando contingencia local.', err);
+          console.warn('API lenta o caída. Activando respaldo local:', err);
           this.usarFallbackLocal();
           this.iniciarJuego();
         }
@@ -82,11 +73,11 @@ export class PreguntadosComponent implements OnInit {
   }
 
   usarFallbackLocal() {
-    this.poolPersonajes = [
-      { name: 'Harry Potter', image: 'https://hp-api.onrender.com/images/harry.jpg', house: 'Gryffindor' },
-      { name: 'Hermione Granger', image: 'https://hp-api.onrender.com/images/hermione.jpg', house: 'Gryffindor' },
-      { name: 'Ron Weasley', image: 'https://hp-api.onrender.com/images/ron.jpg', house: 'Gryffindor' },
-      { name: 'Draco Malfoy', image: 'https://hp-api.onrender.com/images/draco.jpg', house: 'Slytherin' }
+    this.poolDigimon = [
+      { name: 'Agumon', image: 'https://digimon-api.com/images/digimon/w/Agumon.png' },
+      { name: 'Gabumon', image: 'https://digimon-api.com/images/digimon/w/Gabumon.png' },
+      { name: 'Patamon', image: 'https://digimon-api.com/images/digimon/w/Patamon.png' },
+      { name: 'Gatomon', image: 'https://digimon-api.com/images/digimon/w/Gatomon.png' }
     ];
   }
 
@@ -98,26 +89,32 @@ export class PreguntadosComponent implements OnInit {
   }
 
   siguientePregunta() {
-    if (this.rondaActual >= this.maxRondas || this.poolPersonajes.length === 0) {
+    if (this.rondaActual >= this.maxRondas || this.poolDigimon.length === 0) {
       this.finalizarJuego();
       return;
     }
 
     this.cargando = false;
     this.respondido = false;
-    this.mensaje = '¿Cómo se llama este personaje?';
+    this.mensaje = '¿Cómo se llama este Digimon?';
     this.rondaActual++;
 
-    const randomIndex = Math.floor(Math.random() * this.poolPersonajes.length);
-    this.personajeActual = this.poolPersonajes[randomIndex];
-    this.poolPersonajes.splice(randomIndex, 1);
+    const randomIndex = Math.floor(Math.random() * this.poolDigimon.length);
+    this.digimonActual = this.poolDigimon[randomIndex];
+    this.poolDigimon.splice(randomIndex, 1); // Evitamos repetidos
 
-    this.generarOpciones(this.personajeActual.name);
+    this.generarOpciones(this.digimonActual.name);
   }
 
   generarOpciones(respuestaCorrecta: string) {
-    const incorrectas = [...this.nombresDistractores]
-      .filter(n => n !== respuestaCorrecta)
+    let listaNombres = this.poolDigimon.map(d => d.name).filter(n => n !== respuestaCorrecta);
+    
+    if (listaNombres.length < 3) {
+      listaNombres = [...listaNombres, ...this.nombresDistractores];
+    }
+
+    const incorrectas = listaNombres
+      .filter((value, index, self) => self.indexOf(value) === index && value !== respuestaCorrecta)
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
 
@@ -128,11 +125,11 @@ export class PreguntadosComponent implements OnInit {
     if (this.respondido) return;
     this.respondido = true;
 
-    if (opcionSeleccionada === this.personajeActual.name) {
+    if (opcionSeleccionada === this.digimonActual.name) {
       this.puntos++;
-      this.mensaje = `✅ ¡Excelente! Es ${this.personajeActual.name}.`;
+      this.mensaje = `✅ ¡Excelente! Es ${this.digimonActual.name}.`;
     } else {
-      this.mensaje = `❌ Incorrecto. Era: "${this.personajeActual.name}"`;
+      this.mensaje = `❌ Incorrecto. Era: "${this.digimonActual.name}"`;
     }
   }
 

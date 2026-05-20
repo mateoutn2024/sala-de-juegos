@@ -2,21 +2,21 @@
   <div class="row justify-content-center">
     <div class="col-md-6 card shadow-sm border-0 p-5 bg-white text-dark container-quiz">
       
-      <h2 class="fw-bold text-center text-dark mb-2">Harry Potter Preguntados</h2>
+      <h2 class="fw-bold text-center text-dark mb-2">Digimon Preguntados</h2>
       <p class="fs-5 text-center text-muted mb-4" *ngIf="!juegoTerminado">
         Pregunta: <span class="fw-bold text-primary">{{ rondaActual }}</span> / {{ maxRondas }} | Aciertos: <span class="text-success fw-bold">{{ puntos }}</span>
       </p>
 
       <div *ngIf="cargando" class="text-center my-5 py-4">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Cargando personaje...</span>
+          <span class="visually-hidden">Evolucionando datos...</span>
         </div>
-        <p class="text-muted mt-2 fw-medium">Buscando en los archivos de Hogwarts...</p>
+        <p class="text-muted mt-2 fw-medium">Conectando con el Mundo Digital...</p>
       </div>
 
       <div *ngIf="!juegoTerminado && !cargando">
         <div class="text-center mb-4">
-          <img [src]="personajeActual.image" alt="Personaje Harry Potter" class="img-fluid rounded shadow-sm cover-comic">
+          <img [src]="digimonActual.image" alt="Digimon" class="img-fluid rounded shadow-sm cover-comic" style="max-height: 250px; background-color: #f8f9fa; padding: 10px;">
         </div>
 
         <div class="alert text-center my-3 fw-medium py-2" 
@@ -30,8 +30,8 @@
                   (click)="verificarRespuesta(opcion)"
                   [disabled]="respondido"
                   class="btn py-2.5 px-3 fw-bold btn-option text-start text-truncate"
-                  [ngClass]="{'btn-outline-secondary': !respondido, 'btn-success': respondido && opcion === personajeActual.name, 'btn-danger': respondido && opcion !== personajeActual.name}">
-            📌 {{ opcion }}
+                  [ngClass]="{'btn-outline-secondary': !respondido, 'btn-success': respondido && opcion === digimonActual.name, 'btn-danger': respondido && opcion !== digimonActual.name}">
+            👾 {{ opcion }}
           </button>
         </div>
 
@@ -41,9 +41,9 @@
       </div>
 
       <div *ngIf="juegoTerminado && !cargando" class="text-center py-3">
-        <h3 class="fw-bold mb-3">Fin de la Trivia</h3>
-        <div *ngIf="puntos >= 5" class="alert alert-success fs-5 fw-bold py-3 shadow-sm mb-4">🎉 ¡Mago de Hogwarts! Superaste la trivia con {{ puntos }} aciertos.</div>
-        <div *ngIf="puntos < 5" class="alert alert-warning fs-5 fw-bold py-3 shadow-sm mb-4">🍿 Un muggle total. Conseguiste solo {{ puntos }} aciertos.</div>
+        <h3 class="fw-bold mb-3">Fin de la Partida</h3>
+        <div *ngIf="puntos >= 5" class="alert alert-success fs-5 fw-bold py-3 shadow-sm mb-4">🎉 ¡Niño Elegido! Superaste la trivia con {{ puntos }} aciertos.</div>
+        <div *ngIf="puntos < 5" class="alert alert-warning fs-5 fw-bold py-3 shadow-sm mb-4">🍿 Te falta entrenar. Conseguiste solo {{ puntos }} aciertos.</div>
         <button (click)="iniciarJuego()" class="btn btn-primary w-100 py-2 fw-bold">Jugar de nuevo</button>
       </div>
 
