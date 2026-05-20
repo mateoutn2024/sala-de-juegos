@@ -44,7 +44,7 @@
 
       <div class="text-center mb-3">
         <span *ngIf="usuarioLogueado" class="badge bg-success p-2 fs-6">
-          Último ingreso rápido: <strong>{{ usuarioLogueado?.email }}</strong>
+          Último ingreso rápido: <strong>{{ usuarioLogueado.email }}</strong>
         </span>
         <span *ngIf="!usuarioLogueado" class="badge bg-secondary p-2 fs-6">
           Ningún usuario logueado en esta vista
