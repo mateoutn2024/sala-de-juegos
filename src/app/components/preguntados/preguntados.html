@@ -1,0 +1,86 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7 pokedex-container">
+      
+      <h2 class="pokedex-title text-center mb-3">¿Quién es este Pokémon?</h2>
+      
+      <div class="d-flex justify-content-center mb-3" *ngIf="!juegoTerminado && !errorApi">
+        <div class="scoreboard d-flex gap-3 fs-6">
+          <span>RONDA: <strong>{{ rondaActual }}</strong>/{{ maxRondas }}</span>
+          <span class="text-white">|</span>
+          <span>PUNTOS: <strong>{{ puntos }}</strong></span>
+        </div>
+      </div>
+
+      <div class="pokedex-screen">
+
+        <div *ngIf="cargando" class="text-center my-5 py-4">
+          <div class="spinner-border text-danger" role="status" style="width: 3rem; height: 3rem;"></div>
+          <p class="text-muted mt-2 fw-bold">Actualizando Pokédex...</p>
+        </div>
+
+        <div *ngIf="errorApi && !cargando" class="text-center py-5">
+          <h3 class="fw-bold text-danger mb-3">¡ERROR DE CONEXIÓN!</h3>
+          <p class="text-muted mb-4">Se perdió el enlace con el Centro Pokémon.</p>
+          <button (click)="cargarPokemonAPI()" class="btn btn-pkmn-action px-4">Reintentar</button>
+        </div>
+
+        <div *ngIf="!juegoTerminado && !cargando && !errorApi">
+          
+          <div class="pokemon-image-container mb-3">
+            <img [src]="pokemonActual.image" alt="Pokémon" class="img-fluid" 
+                 style="max-height: 180px; filter: drop-shadow(0px 8px 6px rgba(0,0,0,0.3)); transition: filter 0.3s ease;" 
+                 [style.filter]="respondido ? 'none' : 'brightness(0)'">
+          </div>
+
+          <div class="alert text-center pkmn-alert my-3 py-2" 
+               [ngClass]="{
+                 'alert-info': !respondido,
+                 'alert-success': respondido && mensaje.includes('✅'),
+                 'alert-danger': respondido && mensaje.includes('❌')
+               }">
+            {{ mensaje }}
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col-6" *ngFor="let opcion of opciones">
+              <button (click)="verificarRespuesta(opcion)"
+                      [disabled]="respondido"
+                      class="btn btn-pkmn-option w-100 py-2.5 px-2 text-truncate"
+                      [ngClass]="{
+                        'correct': respondido && opcion === pokemonActual.name,
+                        'incorrect': respondido && opcion === opcionSeleccionada && opcion !== pokemonActual.name
+                      }">
+                {{ opcion }}
+              </button>
+            </div>
+          </div>
+
+          <button *ngIf="respondido" (click)="siguientePregunta()" class="btn btn-pkmn-action w-100 py-3 fs-5">
+            {{ rondaActual === maxRondas ? 'Ver Resultados' : 'Siguiente Pokémon ➡️' }}
+          </button>
+        </div>
+
+        <div *ngIf="juegoTerminado && !cargando && !errorApi" class="text-center py-3">
+          <h3 class="fw-bold mb-3 text-dark">Evaluación Final</h3>
+          
+          <div class="text-center mb-4">
+             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" width="100" alt="Pikachu">
+          </div>
+
+          <div *ngIf="puntos >= 5" class="alert alert-success pkmn-alert fs-5 py-3 shadow-sm mb-4">🎉 ¡Increíble! Eres un Maestro Pokémon con {{ puntos }} aciertos.</div>
+          <div *ngIf="puntos < 5" class="alert alert-warning pkmn-alert fs-5 py-3 shadow-sm mb-4">🍿 Buen intento. Sigue entrenando, conseguiste {{ puntos }} aciertos.</div>
+          <button (click)="iniciarJuego()" class="btn btn-pkmn-action w-100 py-3 fs-5">¡Jugar de nuevo!</button>
+        </div>
+
+      </div> <div class="d-flex justify-content-between align-items-center mt-3 px-2">
+        <div style="width: 40px; height: 40px; background-color: #333; border-radius: 50%; border: 4px solid #555;"></div>
+        <div class="d-flex gap-2">
+            <div style="width: 50px; height: 10px; background-color: #3b4cca; border-radius: 5px;"></div>
+            <div style="width: 50px; height: 10px; background-color: #4caf50; border-radius: 5px;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

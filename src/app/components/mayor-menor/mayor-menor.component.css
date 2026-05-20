@@ -1,33 +1,104 @@
-/* Contenedor principal alineado con el diseño limpio */
-.container-game {
-  border-radius: 12px;
+/* Contenedor principal estilo mesa de póker / paño verde */
+.mesa-casino {
+  background-color: #2e7d32; /* Verde casino clásico */
+  border: 10px solid #3e2723; /* Borde oscuro tipo madera */
+  border-radius: 20px;
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.6), 0 15px 25px rgba(0,0,0,0.5);
+  padding: 30px;
+  color: white;
 }
 
-/* Diseño de la Carta Española Limpia */
-.card-espanola {
-  width: 11rem;
-  height: 16rem;
-  border-radius: 12px;
-  border: 2px solid #dee2e6;
-  background-color: #f8f9fa;
-  transition: transform 0.2s ease;
+/* Título del juego */
+.titulo-casino {
+  color: #ffd700; /* Oro */
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
 
-.card-espanola:hover {
-  transform: translateY(-3px);
-}
-
-.card-number {
-  font-family: system-ui, -apple-system, sans-serif;
-  color: #212529;
-}
-
-/* Estilo para los botones de acción */
-.btn-action {
+/* Marcador de puntos estilo placa dorada */
+.marcador-cartas {
+  background-color: #212121;
+  color: #ffd700;
+  padding: 8px 20px;
   border-radius: 8px;
-  transition: transform 0.1s ease;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border: 2px solid #ffd700;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
 
-.btn-action:active {
-  transform: scale(0.97);
+/* Estilo del mazo y la carta actual */
+.contenedor-carta {
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carta-poker {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.carta-poker:hover {
+  transform: translateY(-5px);
+}
+
+/* Botones de acción (Mayor y Menor) */
+.btn-mayor {
+  background-color: #1976d2; /* Azul para Mayor */
+  color: white;
+  font-weight: 900;
+  font-size: 1.1rem;
+  border: 3px solid #0d47a1;
+  border-radius: 12px;
+  box-shadow: 0 5px 0 #0d47a1;
+  transition: all 0.1s ease;
+}
+
+.btn-mayor:hover:not(:disabled) {
+  background-color: #1565c0;
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #0d47a1;
+}
+
+.btn-mayor:active:not(:disabled) {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 #0d47a1;
+}
+
+.btn-menor {
+  background-color: #d32f2f; /* Rojo para Menor */
+  color: white;
+  font-weight: 900;
+  font-size: 1.1rem;
+  border: 3px solid #b71c1c;
+  border-radius: 12px;
+  box-shadow: 0 5px 0 #b71c1c;
+  transition: all 0.1s ease;
+}
+
+.btn-menor:hover:not(:disabled) {
+  background-color: #c62828;
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #b71c1c;
+}
+
+.btn-menor:active:not(:disabled) {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 #b71c1c;
+}
+
+/* Alertas de feedback */
+.alerta-casino {
+  border-radius: 10px;
+  font-weight: bold;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }

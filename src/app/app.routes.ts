@@ -5,7 +5,7 @@ import { RegistroComponent } from './pages/registro/registro';
 import { QuienSoyComponent } from './pages/quien-soy/quien-soy';
 import { AhorcadoComponent } from './components/ahorcado/ahorcado.component';
 import { MayorMenorComponent } from './components/mayor-menor/mayor-menor.component';
-import { PreguntadosComponent } from './components/preguntados/preguntados.component';
+import { PreguntadosComponent } from './components/preguntados/preguntados';
 import { ChatComponent } from './components/chat/chat.component';
 import { authGuard } from './guards/auth-guard';
 

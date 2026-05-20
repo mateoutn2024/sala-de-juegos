@@ -1,80 +1,58 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-12">
-      
-      <div class="text-center mb-5">
-        <h1 class="fw-bold text-dark">Sala de Juegos</h1>
-        <p class="text-muted fs-5">Seleccioná una de las opciones disponibles para comenzar a jugar o interactuar.</p>
-      </div>
+<div class="container mt-5 pb-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold text-dark">🎮 Sala de Juegos</h1>
+    <p class="lead text-muted">Elegí tu próximo desafío</p>
+  </div>
 
-      <h5 class="text-secondary fw-semibold text-uppercase tracking-wider mb-3">🎮 Juegos Disponibles</h5>
-      <div class="row g-4 mb-5">
-        
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm border-0">
-            <div class="card-body p-4 d-flex flex-column">
-              <h4 class="card-title fw-bold text-primary mb-3">Juego del Ahorcado</h4>
-              <p class="card-text text-secondary flex-grow-1">
-                Adiviná la palabra secreta ingresando letras mediante los botones en pantalla antes de quedarte sin intentos.
-              </p>
-              <button [routerLink]="['/components/ahorcado']" class="btn btn-primary w-100 py-2 fw-bold mt-3">
-                Ingresar al Juego
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm border-0">
-            <div class="card-body p-4 d-flex flex-column">
-              <h4 class="card-title fw-bold text-primary mb-3">Mayor o Menor</h4>
-              <p class="card-text text-secondary flex-grow-1">
-                Arriesgá si la siguiente carta de la baraja será mayor, menor o igual que la que se muestra actualmente en base a tu puntuación.
-              </p>
-              <button [routerLink]="['/components/mayor-menor']" class="btn btn-primary w-100 py-2 fw-bold mt-3">
-                Ingresar al Juego
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm border-0">
-            <div class="card-body p-4 d-flex flex-column">
-              <h4 class="card-title fw-bold text-primary mb-3">Harry Potter Preguntados</h4>
-              <p class="card-text text-secondary flex-grow-1">
-                Demostrá tus conocimientos del mundo mágico adivinando el nombre del personaje a partir de su foto oficial en tiempo real.
-              </p>
-              <button [routerLink]="['/components/preguntados']" class="btn btn-primary w-100 py-2 fw-bold mt-3">
-                Ingresar al Juego
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <h5 class="text-secondary fw-semibold text-uppercase tracking-wider mb-3">💬 Comunidad</h5>
-      <div class="row">
-        <div class="col-12">
-          <div class="card shadow-sm border-0 bg-light">
-            <div class="card-body p-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-              <div>
-                <h4 class="fw-bold text-dark mb-1">Sala de Chat Global</h4>
-                <p class="text-secondary mb-0">
-                  Conectate a la sala en vivo para comunicarte e interactuar con todos los usuarios de la plataforma que estén logueados.
-                </p>
-              </div>
-              <div class="text-nowrap">
-                <button [routerLink]="['/components/chat']" class="btn btn-dark px-4 py-2 fw-bold">
-                  Ingresar al Chat
-                </button>
-              </div>
-            </div>
-          </div>
+  <div class="row g-4 justify-content-center">
+    
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm border-0 bg-white game-card" (click)="irAJuego('ahorcado')">
+        <div class="card-body text-center p-4">
+          <h1 class="display-3 mb-3">🪢</h1>
+          <h3 class="fw-bold">Ahorcado</h3>
+          <p class="text-muted">Descubrí la palabra oculta antes de que se acaben los intentos.</p>
+          <button class="btn btn-outline-dark w-100 fw-bold rounded-pill mt-auto">Jugar Ahorcado</button>
         </div>
       </div>
-
     </div>
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm border-0 bg-white game-card" (click)="irAJuego('mayor-menor')">
+        <div class="card-body text-center p-4">
+          <h1 class="display-3 mb-3">🃏</h1>
+          <h3 class="fw-bold">Mayor o Menor</h3>
+          <p class="text-muted">Adiviná si la siguiente carta del mazo será mayor o menor a la actual.</p>
+          <button class="btn btn-outline-dark w-100 fw-bold rounded-pill mt-auto">Jugar Mayor o Menor</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm border-0 game-card poke-card" (click)="irAJuego('preguntados')">
+        <div class="card-body text-center p-4">
+          <h1 class="display-3 mb-3">🔴</h1>
+          <h3 class="fw-bold poke-title">Poké-Trivia</h3>
+          <p class="text-light fw-medium">¿Quién es este Pokémon? Demostrá tus conocimientos.</p>
+          <button class="btn w-100 fw-bold rounded-pill mt-auto poke-btn">¡Atraparlos ya!</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8 mt-4">
+      <div class="card shadow-sm border-0 chat-card" (click)="irAJuego('chat')">
+        <div class="card-body d-flex align-items-center justify-content-between p-4">
+          <div class="d-flex align-items-center gap-3">
+            <h1 class="mb-0">💬</h1>
+            <div>
+              <h4 class="fw-bold mb-0">Sala de Chat Pública</h4>
+              <p class="text-muted mb-0">Hablá con otros jugadores en tiempo real.</p>
+            </div>
+          </div>
+          <button class="btn btn-primary fw-bold px-4 rounded-pill">Ingresar al Chat</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
