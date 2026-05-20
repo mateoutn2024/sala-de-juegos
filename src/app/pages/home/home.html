@@ -28,11 +28,19 @@
       </div>
     </div>
     
+
     <div class="col-md-6 col-lg-5">
-      <div class="card h-100 shadow-sm border-0 game-card poke-card" (click)="irAJuego('preguntados')">
+      <div class="card h-100 shadow-sm border-0 game-card poke-card" (click)="irAJuego('preguntados')" style="cursor: pointer;">
         <div class="card-body text-center p-4 d-flex flex-column">
-          <h1 class="display-3 mb-3">🔴</h1>
-          <h3 class="fw-bold poke-title">Poké-Trivia</h3>
+          
+          <div class="my-3 d-flex align-items-center justify-content-center" style="height: 65px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg" 
+                 alt="Pokémon Logo" 
+                 class="img-fluid" 
+                 style="max-height: 100%; max-width: 150px; object-fit: contain;">
+          </div>
+
+          <h3 class="fw-bold poke-title mt-2">Poké-Trivia</h3>
           <p class="text-light fw-medium">¿Quién es este Pokémon? Demostrá tus conocimientos.</p>
           <button class="btn w-100 fw-bold rounded-pill mt-auto poke-btn">¡Atraparlos ya!</button>
         </div>
