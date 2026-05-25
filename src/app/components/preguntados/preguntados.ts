@@ -133,5 +133,6 @@ export class PreguntadosComponent implements OnInit {
     this.juegoTerminado = true;
     this.cargando = false;
     this.cdr.detectChanges();
+    this.juegosService.guardarResultado('Preguntados', this.puntos >= 5, `Puntos: ${this.puntos} en ${this.rondaActual} rondas`);
   }
 }
