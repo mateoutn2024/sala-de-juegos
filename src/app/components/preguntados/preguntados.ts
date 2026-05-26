@@ -19,6 +19,10 @@ export class PreguntadosComponent implements OnInit {
   errorApi: boolean = false;
   juegoTerminado: boolean = false;
 
+  respondido: boolean = false;
+  opcionSeleccionada: string = '';
+  mensaje: string = '';
+
   constructor(
     private preguntadosService: PreguntadosService,
     private juegosService: JuegosService
@@ -34,6 +38,9 @@ export class PreguntadosComponent implements OnInit {
     this.juegoTerminado = false;
     this.indiceActual = 0;
     this.aciertos = 0;
+    this.respondido = false;
+    this.opcionSeleccionada = '';
+    this.mensaje = '';
 
     this.preguntadosService.obtenerTrivia().subscribe({
       next: (preguntasFormateadas) => {
@@ -41,7 +48,7 @@ export class PreguntadosComponent implements OnInit {
         this.cargando = false;
       },
       error: (err) => {
-        console.error('Error al traer la trivia:', err);
+        console.error('Error al conectar con la PokeAPI:', err);
         this.errorApi = true;
         this.cargando = false;
       }
@@ -52,10 +59,24 @@ export class PreguntadosComponent implements OnInit {
     return this.listadoPreguntas[this.indiceActual];
   }
 
-  responder(opcionSeleccionada: string) {
-    if (opcionSeleccionada === this.preguntaActual.respuestaCorrecta) {
+  verificarRespuesta(opcion: string) {
+    if (this.respondido) return;
+
+    this.respondido = true;
+    this.opcionSeleccionada = opcion;
+
+    if (opcion === this.preguntaActual.respuestaCorrecta) {
       this.aciertos++;
+      this.mensaje = `✅ ¡Correcto! Es ${this.preguntaActual.respuestaCorrecta}.`;
+    } else {
+      this.mensaje = `❌ ¡Incorrecto! Era ${this.preguntaActual.respuestaCorrecta}.`;
     }
+  }
+
+  siguienteRonda() {
+    this.respondido = false;
+    this.opcionSeleccionada = '';
+    this.mensaje = '';
 
     if (this.indiceActual < this.listadoPreguntas.length - 1) {
       this.indiceActual++;
@@ -69,9 +90,9 @@ export class PreguntadosComponent implements OnInit {
     const gano = this.aciertos >= 5; 
 
     this.juegosService.guardarResultado(
-      'Preguntados',
+      'Poké-Trivia',
       gano,
-      `Acertó ${this.aciertos} de ${this.listadoPreguntas.length} preguntas.`
+      `Acertó ${this.aciertos} de ${this.listadoPreguntas.length} Pokémon.`
     );
   }
 }
