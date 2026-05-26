@@ -72,7 +72,6 @@ export class MayorMenorComponent implements OnInit {
     if (this.intentos >= this.maxIntentos) {
       this.juegoTerminado = true;
       const ganoJuego = this.puntos >= 5; 
-      // Guarda en Supabase usando tu estructura existente
       this.juegosService.guardarResultado(
         'Mayor o Menor', 
         ganoJuego, 

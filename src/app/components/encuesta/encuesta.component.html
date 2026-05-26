@@ -1,0 +1,101 @@
+<div class="container mt-5 pb-5" @fadeInOut>
+  <div class="row justify-content-center">
+    <div class="col-lg-8" @slideUpDown>
+      
+      <div class="card shadow border-0 p-4 bg-white">
+        <div class="text-center mb-4 border-bottom pb-3">
+          <h2 class="fw-bold text-dark">📋 Encuesta del Sistema</h2>
+          <p class="text-muted small mb-0">Completá los campos obligatorios para la auditoría del Sprint 5</p>
+        </div>
+
+        <div *ngIf="estadoEnvio === 'EXITO'" class="alert alert-success mb-4" @fadeInOut>
+          ✅ {{ mensajeFeedback }}
+        </div>
+        <div *ngIf="estadoEnvio === 'ERROR'" class="alert alert-danger mb-4" @fadeInOut>
+          ⚠️ {{ mensajeFeedback }}
+        </div>
+
+        <form [formGroup]="formEncuesta" (ngSubmit)="enviarFormulario()" novalidate>
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary small">Nombre y Apellido *</label>
+            <input type="text" formControlName="nombreApellido" class="form-control" [ngClass]="{'is-invalid': esInvalido('nombreApellido')}">
+            <div class="invalid-feedback" *ngIf="esInvalido('nombreApellido')">
+              <span *ngIf="obtenerError('nombreApellido', 'required')">El campo es requerido.</span>
+              <span *ngIf="obtenerError('nombreApellido', 'minlength')">Mínimo 3 caracteres.</span>
+              <span *ngIf="obtenerError('nombreApellido', 'soloEspacios')">No se permiten solo espacios.</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold text-secondary small">Edad *</label>
+              <input type="text" formControlName="edad" class="form-control" maxlength="2" [ngClass]="{'is-invalid': esInvalido('edad')}">
+              <div class="invalid-feedback" *ngIf="esInvalido('edad')">
+                <span *ngIf="obtenerError('edad', 'required')">La edad es requerida.</span>
+                <span *ngIf="obtenerError('edad', 'pattern')">Solo se permiten números.</span>
+                <span *ngIf="obtenerError('edad', 'min')">Debe ser mayor a 18 años.</span>
+                <span *ngIf="obtenerError('edad', 'max')">Debe ser menor a 99 años.</span>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold text-secondary small">Número de Teléfono *</label>
+              <input type="text" formControlName="telefono" class="form-control" maxlength="10" [ngClass]="{'is-invalid': esInvalido('telefono')}">
+              <div class="invalid-feedback" *ngIf="esInvalido('telefono')">
+                <span *ngIf="obtenerError('telefono', 'required')">El teléfono es requerido.</span>
+                <span *ngIf="obtenerError('telefono', 'pattern')">Solo se permiten números.</span>
+                <span *ngIf="obtenerError('telefono', 'maxlength')">No puede superar los 10 caracteres.</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4 text-muted">
+
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary small">1. Juego Favorito *</label>
+            <select formControlName="juegoFavorito" class="form-select" [ngClass]="{'is-invalid': esInvalido('juegoFavorito')}">
+              <option value="" disabled selected>Seleccioná una opción...</option>
+              <option value="Ahorcado">Ahorcado</option>
+              <option value="Mayor o Menor">Mayor o Menor</option>
+              <option value="Poke-Trivia">Poké-Trivia</option>
+              <option value="PONG Arcade">PONG Arcade</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="esInvalido('juegoFavorito')">Campo requerido.</div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="form-label fw-bold text-secondary small mb-0">2. Nivel de Satisfacción de la Interfaz *</label>
+              <span class="badge bg-primary">Puntaje: {{ formEncuesta.get('nivelSatisfaccion')?.value }} / 10</span>
+            </div>
+            <input type="range" min="1" max="10" step="1" formControlName="nivelSatisfaccion" class="form-range">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary small">3. Comentarios y Sugerencias *</label>
+            <textarea formControlName="sugerencias" class="form-control" rows="3" [ngClass]="{'is-invalid': esInvalido('sugerencias')}"></textarea>
+            <div class="invalid-feedback" *ngIf="esInvalido('sugerencias')">
+              <span *ngIf="obtenerError('sugerencias', 'required')">Campo requerido.</span>
+              <span *ngIf="obtenerError('sugerencias', 'minlength')">Mínimo 10 caracteres obligatorios.</span>
+              <span *ngIf="obtenerError('sugerencias', 'soloEspacios')">No se permiten campos vacíos.</span>
+            </div>
+          </div>
+
+          <div class="mb-4 form-check">
+            <input type="checkbox" formControlName="recomiendaPlataforma" class="form-check-input" id="checkRecomienda" [ngClass]="{'is-invalid': esInvalido('recomiendaPlataforma')}">
+            <label class="form-check-label small fw-semibold text-dark" for="checkRecomienda">
+              Recomiendo la plataforma a otros alumnos de la UTN *
+            </label>
+            <div class="invalid-feedback" *ngIf="esInvalido('recomiendaPlataforma')">Es obligatorio marcar la casilla.</div>
+          </div>
+
+          <button type="submit" [disabled]="procesando" class="btn btn-dark w-100 rounded-pill fw-bold shadow-sm">
+            Guardar Respuestas
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,7 +6,7 @@
 
   <div class="row g-4 justify-content-center">
     
-<div class="col-md-6 col-lg-5">
+    <div class="col-md-6 col-lg-5">
       <div class="card h-100 shadow border-0 game-card" style="background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%); cursor: pointer;" (click)="irAJuego('ahorcado')">
         <div class="card-body text-center p-4 d-flex flex-column text-white">
           <h1 class="display-3 mb-3" style="text-shadow: 0 4px 10px rgba(0,0,0,0.3);">🪢</h1>
@@ -28,18 +28,15 @@
       </div>
     </div>
     
-
     <div class="col-md-6 col-lg-5">
       <div class="card h-100 shadow-sm border-0 game-card poke-card" (click)="irAJuego('preguntados')" style="cursor: pointer;">
         <div class="card-body text-center p-4 d-flex flex-column">
-          
           <div class="my-3 d-flex align-items-center justify-content-center" style="height: 65px;">
             <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg" 
                  alt="Pokémon Logo" 
                  class="img-fluid" 
                  style="max-height: 100%; max-width: 150px; object-fit: contain;">
           </div>
-
           <h3 class="fw-bold poke-title mt-2">Poké-Trivia</h3>
           <p class="text-light fw-medium">¿Quién es este Pokémon? Demostrá tus conocimientos.</p>
           <button class="btn w-100 fw-bold rounded-pill mt-auto poke-btn">¡Atraparlos ya!</button>
@@ -57,10 +54,12 @@
         </div>
       </div>
     </div>
+
     <div class="col-lg-10 mt-5">
       <div class="row g-4">
+        
         <div class="col-md-6">
-          <div class="card h-100 shadow-sm border-0 chat-card" (click)="irAJuego('chat')">
+          <div class="card h-100 shadow-sm border-0 chat-card" (click)="irAJuego('chat')" style="cursor: pointer;">
             <div class="card-body d-flex align-items-center gap-3 p-4">
               <h1 class="mb-0">💬</h1>
               <div>
@@ -70,6 +69,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-6">
           <div class="card h-100 shadow-sm border-0 chat-card" routerLink="/resultados" style="background-color: #fff3cd; cursor: pointer;">            
             <div class="card-body d-flex align-items-center gap-3 p-4">
@@ -81,6 +81,31 @@
             </div>
           </div>
         </div>
+
+        <div class="col-md-6">
+          <div class="card h-100 shadow-sm border-0 chat-card" routerLink="/encuesta" style="background-color: #e2e3e5; cursor: pointer;">
+            <div class="card-body d-flex align-items-center gap-3 p-4">
+              <h1 class="mb-0">📋</h1>
+              <div>
+                <h5 class="fw-bold mb-1 text-dark">Responder Encuesta</h5>
+                <p class="text-muted mb-0 small">Dejanos tu opinión sobre el sistema.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="esAdministrador">
+          <div class="card h-100 shadow-sm border-0 chat-card" routerLink="/admin/resultados-encuestas" style="background-color: #cff4fc; cursor: pointer; border-left: 4px solid #0dcedc !important;">
+            <div class="card-body d-flex align-items-center gap-3 p-4">
+              <h1 class="mb-0">🔑</h1>
+              <div>
+                <h5 class="fw-bold mb-1 text-info-dark" style="color: #055160;">Auditoría de Encuestas</h5>
+                <p class="text-muted mb-0 small">Visualización del feedback de usuarios.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 

@@ -1,0 +1,7 @@
+.card {
+  border-radius: 8px !important;
+}
+.invalid-feedback {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
