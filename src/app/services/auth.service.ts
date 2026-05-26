@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
 import { environment } from '../../environment/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, from, map, switchMap, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,31 +14,45 @@ export class AuthService {
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 
-    // Escucha cambios de sesión (Login, Logout, Registro)
     this.supabase.auth.onAuthStateChange((event, session) => {
       this.usuarioSubject.next(session?.user ?? null);
     });
   }
 
-  // Registro de nuevos usuarios
-async registrar(email: string, pass: string, nombre: string, apellido: string, edad: number) {
-  // 1. Crea la cuenta en el sistema de autenticación
-  const response = await this.supabase.auth.signUp({ email, password: pass });
-
-  // 2. Si no hay error y el usuario se creó, guardamos sus datos en la base de datos
-  if (!response.error && response.data.user) {
-    await this.supabase.from('usuarios').insert([{
-      id: response.data.user.id, // Vincula el perfil al usuario de autenticación
-      email: email,
-      nombre: nombre,
-      apellido: apellido,
-      edad: edad,
-      fecha_registro: new Date().toISOString()
-    }]);
+  esAdmin(): Observable<boolean> {
+    return this.usuario$.pipe(
+      switchMap((user: any) => {
+        if (!user) return of(false);
+        return from(
+          this.supabase
+            .from('admins')
+            .select('id')
+            .eq('id', user.id)
+            .maybeSingle()
+        ).pipe(
+          map((response: any) => !!response.data)
+        );
+      })
+    );
   }
-  
-  return response;
-}
+
+  async registrar(email: string, pass: string, nombre: string, apellido: string, edad: number) {
+    const response = await this.supabase.auth.signUp({ email, password: pass });
+
+    if (!response.error && response.data.user) {
+      await this.supabase.from('usuarios').insert([{
+        id: response.data.user.id, 
+        email: email,
+        nombre: nombre,
+        apellido: apellido,
+        edad: edad,
+        fecha_registro: new Date().toISOString()
+      }]);
+    }
+    
+    return response;
+  }
+
   async iniciarSesion(email: string, pass: string) {
     const response = await this.supabase.auth.signInWithPassword({ email, password: pass });
     if (!response.error && response.data.user) {
@@ -47,18 +61,15 @@ async registrar(email: string, pass: string, nombre: string, apellido: string, e
     return response;
   }
 
-  // Cerrar sesión
   async salir() {
     await this.supabase.auth.signOut();
   }
 
-  // Para el AuthGuard
   async getUsuarioActual() {
     const { data: { user } } = await this.supabase.auth.getUser();
     return user;
   }
 
-  // Registro de ingresos en la base de datos
   private async guardarLog(email: string) {
     await this.supabase.from('log_usuarios').insert([{ 
       email: email, 

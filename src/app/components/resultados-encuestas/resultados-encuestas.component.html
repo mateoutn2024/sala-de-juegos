@@ -1,0 +1,48 @@
+<div class="container mt-5 pb-5" @fadeInOut>
+  
+  <div class="mb-4">
+    <h2 class="fw-bold text-dark">🔑 Panel de Auditoría: Encuestas</h2>
+    <p class="text-muted small">Módulo exclusivo para perfiles con rol de Administrador</p>
+  </div>
+
+  <div *ngIf="cargando" class="text-center my-5" @fadeInOut>
+    <div class="spinner-border text-secondary mb-2" role="status"></div>
+    <p class="text-muted small">Consumiendo registros de auditoría...</p>
+  </div>
+
+  <div *ngIf="errorMensaje && !cargando" class="alert alert-danger p-3 rounded-3 shadow-sm" @fadeInOut>
+    <strong>Error de Seguridad:</strong> {{ errorMensaje }}
+  </div>
+
+  <div *ngIf="!cargando && !errorMensaje" class="row g-3" [@listAnimation]="listadoEncuestas.length">
+    <div class="col-12" *ngIf="listadoEncuestas.length === 0">
+      <div class="p-4 bg-white text-center rounded text-muted shadow-sm">
+        No se registran datos cargados en el sistema.
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4" *ngFor="let encuesta of listadoEncuestas">
+      <div class="card shadow-sm border-0 bg-white p-3 h-100">
+        <div class="border-bottom pb-2 mb-2 d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="fw-bold text-primary mb-0">{{ encuesta.nombre_apellido }}</h6>
+            <span class="text-muted font-monospace small" style="font-size: 0.75rem;">{{ encuesta.user_email }}</span>
+          </div>
+          <span class="badge bg-secondary">{{ encuesta.edad }} años</span>
+        </div>
+        <div class="small text-secondary mb-2">
+          <div><strong>Teléfono:</strong> {{ encuesta.telefono }}</div>
+          <div><strong>Juego Favorito:</strong> {{ encuesta.juego_favorito }}</div>
+          <div><strong>Conformidad:</strong> <span class="text-dark fw-bold">{{ encuesta.nivel_satisfaccion }}/10</span></div>
+        </div>
+        <div class="p-2 bg-light rounded text-muted small border-start border-3 border-secondary text-truncate-custom">
+          "{{ encuesta.sugerencias }}"
+        </div>
+        <div class="text-end text-muted mt-2 pt-2 border-top" style="font-size: 0.7rem;">
+          📅 {{ encuesta.created_at | date:'dd/MM/yyyy - HH:mm' }} hs
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
