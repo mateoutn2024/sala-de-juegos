@@ -71,7 +71,7 @@
         </div>
 
         <div class="col-md-6">
-          <div class="card h-100 shadow-sm border-0 chat-card" routerLink="/resultados" style="background-color: #fff3cd; cursor: pointer;">            
+          <div class="card h-100 shadow-sm border-0 chat-card" [routerLink]="['/resultados']" style="background-color: #fff3cd; cursor: pointer;">            
             <div class="card-body d-flex align-items-center gap-3 p-4">
               <h1 class="mb-0">🏆</h1>
               <div>
@@ -83,7 +83,7 @@
         </div>
 
         <div class="col-md-6">
-          <div class="card h-100 shadow-sm border-0 chat-card" routerLink="/encuesta" style="background-color: #e2e3e5; cursor: pointer;">
+          <div class="card h-100 shadow-sm border-0 chat-card" [routerLink]="['/encuesta']" style="background-color: #e2e3e5; cursor: pointer;">
             <div class="card-body d-flex align-items-center gap-3 p-4">
               <h1 class="mb-0">📋</h1>
               <div>
@@ -93,13 +93,13 @@
             </div>
           </div>
         </div>
-
-        <div class="col-md-6" *ngIf="esAdministrador">
-          <div class="card h-100 shadow-sm border-0 chat-card" routerLink="/admin/resultados-encuestas" style="background-color: #cff4fc; cursor: pointer; border-left: 4px solid #0dcedc !important;">
+        
+        <div class="col-md-6" *ngIf="esAdministrador$ | async">
+          <div class="card h-100 shadow-sm border-0 chat-card" [routerLink]="['/admin/resultados-encuestas']" style="background-color: #cff4fc; cursor: pointer; border-left: 4px solid #0dcedc !important;">
             <div class="card-body d-flex align-items-center gap-3 p-4">
               <h1 class="mb-0">🔑</h1>
               <div>
-                <h5 class="fw-bold mb-1 text-info-dark" style="color: #055160;">Auditoría de Encuestas</h5>
+                <h5 class="fw-bold mb-1" style="color: #055160;">Auditoría de Encuestas</h5>
                 <p class="text-muted mb-0 small">Visualización del feedback de usuarios.</p>
               </div>
             </div>

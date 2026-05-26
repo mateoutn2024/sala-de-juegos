@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // <-- Importamos ChangeDetectorRef
 import { CommonModule } from '@angular/common';
 import { EncuestaService } from '../../services/encuestas.service';
 import { Encuesta } from '../../interfaces/encuestas.interface';
@@ -17,7 +17,10 @@ export class ResultadosEncuestasComponent implements OnInit {
   cargando: boolean = true;
   errorMensaje: string | null = null;
 
-  constructor(private encuestaService: EncuestaService) {}
+  constructor(
+    private encuestaService: EncuestaService,
+    private cdr: ChangeDetectorRef 
+  ) {}
 
   ngOnInit(): void {
     this.cargarEncuestas();
@@ -31,11 +34,13 @@ export class ResultadosEncuestasComponent implements OnInit {
       next: (datos) => {
         this.listadoEncuestas = datos;
         this.cargando = false;
+        this.cdr.detectChanges(); 
       },
       error: (err: any) => {
         console.error(err);
         this.errorMensaje = 'Acceso Restringido: No posees privilegios de administrador del sistema.';
         this.cargando = false;
+        this.cdr.detectChanges(); 
       }
     });
   }

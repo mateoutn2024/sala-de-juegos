@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
-  esAdministrador: boolean = false;
+  esAdministrador$!: Observable<boolean>;
 
   constructor(
     private router: Router,
@@ -19,15 +21,14 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.esAdmin().subscribe({
-      next: (isAdmin: boolean) => {
-        this.esAdministrador = isAdmin;
-      },
-      error: (err: any) => {
-        console.error('Error al evaluar el rol de admin:', err);
-        this.esAdministrador = false;
-      }
-    });
+    this.esAdministrador$ = this.authService.usuario$.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.authService.esAdmin();
+        }
+        return of(false);
+      })
+    );
   }
 
   irAJuego(ruta: string) {

@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
-import { PreguntadosService, Pregunta } from '../../services/preguntados.service';
+import { HttpClient } from '@angular/common/http';
 import { JuegosService } from '../../services/juegos.service';
+import { forkJoin } from 'rxjs';
+
+interface Pregunta {
+  enunciado: string;
+  opciones: string[];
+  respuestaCorrecta: string;
+  image: string;
+}
 
 @Component({
   selector: 'app-preguntados',
@@ -23,9 +31,16 @@ export class PreguntadosComponent implements OnInit {
   opcionSeleccionada: string = '';
   mensaje: string = '';
 
+  private poolNombres: string[] = [
+    'Pikachu', 'Charizard', 'Bulbasaur', 'Squirtle', 'Eevee', 'Mewtwo', 'Gengar', 
+    'Lucario', 'Snorlax', 'Jigglypuff', 'Gardevoir', 'Greninja', 'Blastoise', 
+    'Venusaur', 'Rayquaza', 'Garchomp', 'Mudkip', 'Chikorita', 'Cyndaquil', 'Totodile'
+  ];
+
   constructor(
-    private preguntadosService: PreguntadosService,
-    private juegosService: JuegosService
+    private http: HttpClient,
+    private juegosService: JuegosService,
+    private cdr: ChangeDetectorRef 
   ) {}
 
   ngOnInit() {
@@ -42,15 +57,44 @@ export class PreguntadosComponent implements OnInit {
     this.opcionSeleccionada = '';
     this.mensaje = '';
 
-    this.preguntadosService.obtenerTrivia().subscribe({
-      next: (preguntasFormateadas) => {
-        this.listadoPreguntas = preguntasFormateadas;
+    const peticiones = [];
+    for (let i = 0; i < 10; i++) {
+      const idAleatorio = Math.floor(Math.random() * 151) + 1;
+      peticiones.push(this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${idAleatorio}`));
+    }
+
+    forkJoin(peticiones).subscribe({
+      next: (resultados: any[]) => {
+        this.listadoPreguntas = resultados.map(item => {
+          const nombreCorrecto = item.name.charAt(0).toUpperCase() + item.name.slice(1);
+          const imagenUrl = item.sprites.other['official-artwork'].front_default || item.sprites.front_default;
+
+          const setOpciones = new Set<string>();
+          setOpciones.add(nombreCorrecto);
+
+          while (setOpciones.size < 4) {
+            const falso = this.poolNombres[Math.floor(Math.random() * this.poolNombres.length)];
+            if (falso !== nombreCorrecto) {
+              setOpciones.add(falso);
+            }
+          }
+
+          return {
+            enunciado: '¿Quién es este Pokémon?',
+            opciones: Array.from(setOpciones).sort(() => Math.random() - 0.5),
+            respuestaCorrecta: nombreCorrecto,
+            image: imagenUrl
+          };
+        });
+        
         this.cargando = false;
+        this.cdr.detectChanges(); 
       },
       error: (err) => {
-        console.error('Error al conectar con la PokeAPI:', err);
+        console.error('Error cargando la PokeAPI:', err);
         this.errorApi = true;
         this.cargando = false;
+        this.cdr.detectChanges(); 
       }
     });
   }
@@ -71,6 +115,7 @@ export class PreguntadosComponent implements OnInit {
     } else {
       this.mensaje = `❌ ¡Incorrecto! Era ${this.preguntaActual.respuestaCorrecta}.`;
     }
+    this.cdr.detectChanges(); 
   }
 
   siguienteRonda() {
@@ -83,6 +128,7 @@ export class PreguntadosComponent implements OnInit {
     } else {
       this.finalizarJuego();
     }
+    this.cdr.detectChanges(); 
   }
 
   finalizarJuego() {
@@ -94,5 +140,6 @@ export class PreguntadosComponent implements OnInit {
       gano,
       `Acertó ${this.aciertos} de ${this.listadoPreguntas.length} Pokémon.`
     );
+    this.cdr.detectChanges(); 
   }
 }

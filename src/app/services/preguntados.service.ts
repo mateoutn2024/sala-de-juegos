@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 export interface Pregunta {
   enunciado: string;
@@ -21,37 +21,30 @@ export class PreguntadosService {
 
   constructor(private http: HttpClient) {}
 
-  obtenerTrivia(): Observable<Pregunta[]> {
-    const peticiones = [];
+  obtenerPokemonAleatorio(): Observable<Pregunta> {
+    const idAleatorio = Math.floor(Math.random() * 151) + 1;
     
-    for (let i = 0; i < 10; i++) {
-      const idAleatorio = Math.floor(Math.random() * 151) + 1;
-      peticiones.push(this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${idAleatorio}`));
-    }
+    return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${idAleatorio}`).pipe(
+      map(item => {
+        const nombreCorrecto = item.name.charAt(0).toUpperCase() + item.name.slice(1);
+        const imagenUrl = item.sprites.other['official-artwork'].front_default || item.sprites.front_default;
 
-    return forkJoin(peticiones).pipe(
-      map((resultados: any[]) => {
-        return resultados.map(item => {
-          const nombreCorrecto = item.name.charAt(0).toUpperCase() + item.name.slice(1);
-          const imagenUrl = item.sprites.other['official-artwork'].front_default || item.sprites.front_default;
+        const setOpciones = new Set<string>();
+        setOpciones.add(nombreCorrecto);
 
-          const setOpciones = new Set<string>();
-          setOpciones.add(nombreCorrecto);
-
-          while (setOpciones.size < 4) {
-            const falso = this.poolNombres[Math.floor(Math.random() * this.poolNombres.length)];
-            if (falso !== nombreCorrecto) {
-              setOpciones.add(falso);
-            }
+        while (setOpciones.size < 4) {
+          const falso = this.poolNombres[Math.floor(Math.random() * this.poolNombres.length)];
+          if (falso !== nombreCorrecto) {
+            setOpciones.add(falso);
           }
+        }
 
-          return {
-            enunciado: '¿Quién es este Pokémon?',
-            opciones: Array.from(setOpciones).sort(() => Math.random() - 0.5),
-            respuestaCorrecta: nombreCorrecto,
-            image: imagenUrl
-          };
-        });
+        return {
+          enunciado: '¿Quién es este Pokémon?',
+          opciones: Array.from(setOpciones).sort(() => Math.random() - 0.5),
+          respuestaCorrecta: nombreCorrecto,
+          image: imagenUrl
+        };
       })
     );
   }

@@ -3,12 +3,8 @@ import { HomeComponent } from './pages/home/home';
 import { LoginComponent } from './pages/login/login';
 import { RegistroComponent } from './pages/registro/registro';
 import { QuienSoyComponent } from './pages/quien-soy/quien-soy';
-import { AhorcadoComponent } from './components/ahorcado/ahorcado.component';
-import { MayorMenorComponent } from './components/mayor-menor/mayor-menor.component';
-import { PreguntadosComponent } from './components/preguntados/preguntados';
-import { ChatComponent } from './components/chat/chat.component';
 import { authGuard } from './guards/auth-guard';
-import { ResultadosComponent } from './pages/resultados/resultados';
+import { adminGuard } from './guards/admin.guard'; 
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -17,13 +13,48 @@ export const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   { path: 'quien-soy', component: QuienSoyComponent },
   
-  // Rutas del Sprint 3 protegidas por seguridad
-  { path: 'components/ahorcado', component: AhorcadoComponent, canActivate: [authGuard] },
-  { path: 'components/mayor-menor', component: MayorMenorComponent, canActivate: [authGuard] },
-  { path: 'components/preguntados', component: PreguntadosComponent, canActivate: [authGuard] },
-  {path: 'components/juego-propio', loadComponent: () => import('./components/juego-propio/juego-propio').then(m => m.JuegoPropioComponent), canActivate: [authGuard] },
-  { path: 'resultados', component: ResultadosComponent, canActivate: [authGuard] },
-  { path: 'components/chat', component: ChatComponent, canActivate: [authGuard] },
+  { 
+    path: 'components/ahorcado', 
+    loadComponent: () => import('./components/ahorcado/ahorcado.component').then(m => m.AhorcadoComponent), 
+    canActivate: [authGuard] 
+  },
+  { 
+    path: 'components/mayor-menor', 
+    loadComponent: () => import('./components/mayor-menor/mayor-menor.component').then(m => m.MayorMenorComponent), 
+    canActivate: [authGuard] 
+  },
+  { 
+    path: 'components/preguntados', 
+    loadComponent: () => import('./components/preguntados/preguntados').then(m => m.PreguntadosComponent), 
+    canActivate: [authGuard] 
+  },
+  { 
+    path: 'components/juego-propio', 
+    loadComponent: () => import('./components/juego-propio/juego-propio').then(m => m.JuegoPropioComponent), 
+    canActivate: [authGuard] 
+  },
+  { 
+    path: 'components/chat', 
+    loadComponent: () => import('./components/chat/chat.component').then(m => m.ChatComponent), 
+    canActivate: [authGuard] 
+  },
+  { 
+    path: 'resultados', 
+    loadComponent: () => import('./pages/resultados/resultados').then(m => m.ResultadosComponent), 
+    canActivate: [authGuard] 
+  },
+
+  {
+    path: 'encuesta',
+    loadComponent: () => import('./components/encuesta/encuesta.component').then(m => m.EncuestaComponent),
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'admin/resultados-encuestas',
+    loadComponent: () => import('./components/resultados-encuestas/resultados-encuestas.component').then(m => m.ResultadosEncuestasComponent),
+    canActivate: [authGuard, adminGuard] 
+  },
   
   { path: '**', redirectTo: '/home' }
 ];
